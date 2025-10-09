@@ -1,6 +1,6 @@
 package de.malteans.sosactivities.security.token
 
-import de.malteans.sosactivities.security.Role
+import de.malteans.sosactivities.model.Role
 
 interface TokenService {
     fun generate(

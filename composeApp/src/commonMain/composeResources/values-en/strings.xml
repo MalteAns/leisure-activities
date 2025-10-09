@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="app_name">Leisure Activities</string>
+    <string name="en">English</string>
+    <string name="de">Deutsch</string>
+
+    <string name="menu">Menu</string>
+    <string name="close">Close</string>
+    <string name="cancel">Cancel</string>
+    <string name="refresh">Refresh</string>
+    <string name="back">Back</string>
+
+    <!-- Create User Screen _____________________________________________________________________ -->
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+    <string name="create_user">Create user</string>
+    <string name="name_support_text">The name must just contain letters, spaces and hyphens.</string>
+    <string name="registration_token">Registration-Token</string>
+    <string name="scan_registration_token">Scan registration token</string>
+
+    <!-- SignUp Overview Screen ________________________________________________________________ -->
+    <string name="sign_up_overview">Sign Up Overview</string>
+    <string name="search">Search</string>
+    <string name="empty_search">Empty search</string>
+    <string name="activity_at_information_tts">%1$s on %2$s at %3$s.</string>
+    <string name="activity_information_tts">%1$s on %2$s starting %3$s until %4$s.</string>
+    <string name="activity_meet_up_information_tts">Meet up: %1$s</string>
+    <string name="activity_location_information_tts">Where? %1$s</string>
+    <string name="activity_who_information_tts">Who? %1$s</string>
+    <string name="activity_contact_person_information_tts">Contact person: %1$s</string>
+    <string name="sign_up">Sign up</string>
+    <string name="signed_up">Signed up</string>
+    <string name="show_details">Show details</string>
+    <string name="hide_details">Hide details</string>
+    <string name="meet_up_details_title">Meet up</string>
+    <string name="location_details_title">Where?</string>
+    <string name="host_details_title">Who?</string>
+    <string name="contact_person_details_title">Contact person</string>
+    <string name="no_additional_information_available">No additional information available</string>
+    <string name="sign_out_dialog_title">Really sign out?</string>
+    <string name="sign_out_dialog_desc">Are you sure you want to sign out from the activity '%1$s'?</string>
+    <string name="sign_out_dialog_confirm">Yes, sign out</string>
+
+    <!-- Staff Overview Screen _________________________________________________________________ -->
+    <string name="create_activity">Create activity</string>
+
+    <!-- Staff Detail Screen ___________________________________________________________________ -->
+    <string name="starts">Starts</string>
+    <string name="ends">Ends</string>
+    <string name="not_provided">Not provided</string>
+    <string name="information">Information</string>
+    <string name="participants">Participants</string>
+    <string name="no_participants_yet">No participants yet</string>
+
+    <!-- Navigation Drawer _____________________________________________________________________ -->
+    <string name="staff_area">Staff area</string>
+    <string name="settings">Settings</string>
+
+    <!-- Settings Screen ________________________________________________________________________ -->
+    <string name="tts_on_tap">TTS on tap</string>
+    <string name="tts_on_tap_desc">Activates the option to read specific information out loud on tap. (Long press here for more information)</string>
+    <string name="tts_on_tap_adv_desc">This setting enables reading information of the following elements out loud by tapping on them:\n\u2022 Activities in the registration overview</string>
+
+    <!-- Snackbar Messages _____________________________________________________________________ -->
+    <string name="user_created_feedback">Welcome %1$s</string>
+    <string name="server_not_started_desc">Server not started. Please contact the administrator.</string>
+    <string name="server_error_desc">Server Error (%1$s). Please contact the administrator.</string>
+    <string name="unexpected_error_desc">Unexpected Error (%1$s). Please contact the administrator.</string>
+</resources>

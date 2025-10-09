@@ -24,10 +24,11 @@ val module = module {
     }
 
     // DB implemented services
+    single<RegistrationTokensService> { RegistrationTokensServiceImpl(get()) }
     single<UserService> { UserServiceImpl(get()) }
     single<ActivityService> { ActivityServiceImpl(get()) }
-    single<RegistrationService> { RegistrationServiceImpl(get()) }
-    single<ImageService> { ImageServiceImpl(get()) }
+    single<SignUpService> { SignUpServiceImpl(get()) }
+    single<ImageService> { LocalDiskImageService(get()) }
 
     // In Memory implementations for dev/testing
 //    single<UserService> { InMemUserService() }

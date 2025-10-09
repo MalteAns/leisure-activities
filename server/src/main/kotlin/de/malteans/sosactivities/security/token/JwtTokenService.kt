@@ -2,7 +2,7 @@ package de.malteans.sosactivities.security.token
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import de.malteans.sosactivities.security.Role
+import de.malteans.sosactivities.model.Role
 import java.util.*
 
 class JwtTokenService: TokenService {

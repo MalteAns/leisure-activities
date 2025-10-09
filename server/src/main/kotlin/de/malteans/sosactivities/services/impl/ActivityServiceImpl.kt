@@ -1,8 +1,9 @@
 package de.malteans.sosactivities.services.impl
 
-import de.malteans.sosactivities.CreateActivityReq
 import de.malteans.sosactivities.db.ActivitiesTable
-import de.malteans.sosactivities.models.Activity
+import de.malteans.sosactivities.dto.CreateActivityReq
+import de.malteans.sosactivities.dto.UpdateActivityReq
+import de.malteans.sosactivities.model.Activity
 import de.malteans.sosactivities.services.ActivityService
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -11,6 +12,8 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.lessEq
 import org.jetbrains.exposed.sql.transactions.transaction
 import java.time.Instant
 import java.util.*
+import kotlin.time.ExperimentalTime
+import kotlin.time.toKotlinInstant
 
 class ActivityServiceImpl(
     private val db: Database
@@ -18,7 +21,7 @@ class ActivityServiceImpl(
     override fun list(from: String?, to: String?): List<Activity> = transaction(db) {
         val q = ActivitiesTable.selectAll()
         val condFrom = from?.let { ActivitiesTable.startsAt greaterEq Instant.parse(it) }
-        val condTo   = to?.let   { ActivitiesTable.startsAt lessEq Instant.parse(it) }
+        val condTo = to?.let { ActivitiesTable.startsAt lessEq Instant.parse(it) }
         val where = when {
             condFrom != null && condTo != null -> condFrom and condTo
             condFrom != null -> condFrom
@@ -38,41 +41,49 @@ class ActivityServiceImpl(
         ActivitiesTable.insert {
             it[ActivitiesTable.id] = id
             it[title] = req.title
-            it[description] = req.description
             it[startsAt] = Instant.parse(req.startsAt)
-            it[durationMin] = req.durationMin
+            it[endsAt] = req.endsAt?.let { endsAt ->  Instant.parse(endsAt)}
+            it[meetUpInformation] = req.meetUpInformation
+            it[activityLocation] = req.activityLocation
+            it[hostInformation] = req.hostInformation
+            it[contactPersonInformation] = req.contactPersonInformation
             it[imageId] = req.imageId
+            it[updatedAt] = Instant.now()
             it[createdAt] = Instant.now()
-            it[updatedAt] = Instant.now()
         }
         ActivitiesTable.selectAll().where { ActivitiesTable.id eq id }.single().toActivity()
     }
 
-    override fun patch(id: String, body: Map<String, Any?>): Activity? = transaction(db) {
-        val rows = ActivitiesTable.update({ ActivitiesTable.id eq id }) {
-            body["title"]?.let { v -> it[title] = v as String }
-            if (body.containsKey("description")) it[description] = body["description"] as String?
-            body["startsAt"]?.let { v -> it[startsAt] = Instant.parse(v as String) }
-            body["durationMin"]?.let { v -> it[durationMin] = (v as Number).toInt() }
-            if (body.containsKey("imageId")) it[imageId] = body["imageId"] as String?
+    override fun update(id: String, updateActivityReq: UpdateActivityReq): Activity? = transaction(db) {
+        val updatedRows = ActivitiesTable.update({ ActivitiesTable.id eq id }) {
+            it[title] = updateActivityReq.title
+            it[startsAt] = Instant.parse(updateActivityReq.startsAt)
+            it[endsAt] = updateActivityReq.endsAt?.let { endsAt ->  Instant.parse(endsAt)}
+            it[meetUpInformation] = updateActivityReq.meetUpInformation
+            it[activityLocation] = updateActivityReq.activityLocation
+            it[hostInformation] = updateActivityReq.hostInformation
+            it[contactPersonInformation] = updateActivityReq.contactPersonInformation
+            it[imageId] = updateActivityReq.imageId
             it[updatedAt] = Instant.now()
         }
-        if (rows == 0) return@transaction null
+        if (updatedRows == 0) return@transaction null
         ActivitiesTable.selectAll().where { ActivitiesTable.id eq id }.single().toActivity()
     }
-
-    override fun setImage(id: String, imageId: String?): Activity? = patch(id, mapOf("imageId" to imageId))
 
     override fun delete(id: String): Int = transaction(db) {
         ActivitiesTable.deleteWhere { ActivitiesTable.id eq id }
     }
 
+    @OptIn(ExperimentalTime::class)
     private fun ResultRow.toActivity() = Activity(
         id = this[ActivitiesTable.id],
         title = this[ActivitiesTable.title],
-        description = this[ActivitiesTable.description],
-        startsAt = this[ActivitiesTable.startsAt],
-        durationMin = this[ActivitiesTable.durationMin],
-        imageId = this[ActivitiesTable.imageId]
+        startsAt = this[ActivitiesTable.startsAt].toKotlinInstant(),
+        endsAt = this[ActivitiesTable.endsAt]?.toKotlinInstant(),
+        meetUpInformation = this[ActivitiesTable.meetUpInformation],
+        activityLocation = this[ActivitiesTable.activityLocation],
+        hostInformation = this[ActivitiesTable.hostInformation],
+        contactPersonInformation = this[ActivitiesTable.contactPersonInformation],
+        imageId = this[ActivitiesTable.imageId],
     )
 }

@@ -1,9 +1,9 @@
 package de.malteans.sosactivities.routes
 
-import de.malteans.sosactivities.SetStaffReq
-import de.malteans.sosactivities.SetStaffResp
-import de.malteans.sosactivities.models.ext.toDto
-import de.malteans.sosactivities.security.Role
+import de.malteans.sosactivities.dto.SetStaffReq
+import de.malteans.sosactivities.dto.SetStaffResp
+import de.malteans.sosactivities.model.Role
+import de.malteans.sosactivities.model.ext.toDto
 import de.malteans.sosactivities.security.requireRole
 import de.malteans.sosactivities.services.UserService
 import io.ktor.http.*

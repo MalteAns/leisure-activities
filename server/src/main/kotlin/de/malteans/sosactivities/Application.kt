@@ -6,6 +6,10 @@ import de.malteans.sosactivities.plugins.configureRouting
 import de.malteans.sosactivities.security.AbortRoute
 import de.malteans.sosactivities.security.installJwtAuth
 import de.malteans.sosactivities.security.token.TokenConfig
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.engine.cio.*
+import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
@@ -24,23 +28,39 @@ import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
 
 fun main() {
-    embeddedServer(Netty, port = SERVER_PORT, host = "127.0.0.1", module = Application::module)
+    embeddedServer(Netty, port = Constants.SERVER_PORT, host = "0.0.0.0", module = Application::module)
         .start(wait = true)
 }
 
 @Suppress("unused")
 fun Application.module() {
+    val httpClient = HttpClient(CIO)
+
     install(DefaultHeaders)
     install(AutoHeadResponse)
     install(CallLogging)
     install(ContentNegotiation) { json() }
     configureRequestValidation()
     install(StatusPages) {
+        suspend fun respondCat(call: ApplicationCall, status: HttpStatusCode) {
+            val bytes: ByteArray = httpClient.get("https://http.cat/${status.value}.jpg").body()
+            call.respondBytes(bytes, ContentType.Image.JPEG, status)
+        }
+
         exception<AbortRoute> { call, _ -> /* already responded */ }
         exception<Throwable> { call, cause ->
             // TODO: log cause
             cause.printStackTrace()
             call.respond(HttpStatusCode.InternalServerError, ErrorDto("server_error", cause.message ?: ""))
+        }
+
+        status(
+            HttpStatusCode.BadRequest, HttpStatusCode.Unauthorized, HttpStatusCode.Forbidden,
+            HttpStatusCode.NotFound, HttpStatusCode.InternalServerError
+        ) { call, status ->
+            if (status.value in 400..599) {
+                respondCat(call, status)
+            }
         }
     }
 

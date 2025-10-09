@@ -2,6 +2,7 @@ package de.malteans.sosactivities.security
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
+import de.malteans.sosactivities.model.Role
 import de.malteans.sosactivities.security.token.TokenConfig
 import io.ktor.server.application.*
 import io.ktor.server.auth.*

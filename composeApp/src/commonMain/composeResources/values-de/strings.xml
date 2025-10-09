@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<resources>
+    <string name="app_name">Freizeitaktivitäten</string>
+    <string name="en">English</string>
+    <string name="de">Deutsch</string>
+
+    <string name="menu">Menü</string>
+    <string name="close">Schließen</string>
+    <string name="cancel">Abbrechen</string>
+    <string name="refresh">Aktualisieren</string>
+    <string name="back">Zurück</string>
+
+    <!-- Create User Screen ____________________________________________________________________ -->
+    <string name="first_name">Vorname</string>
+    <string name="last_name">Nachname</string>
+    <string name="create_user">Benutzer erstellen</string>
+    <string name="name_support_text">Der Name darf nur Buchstaben, Leerzeichen und Bindestriche enthalten.</string>
+    <string name="registration_token">Registrierungstoken</string>
+    <string name="scan_registration_token">Registrierungstoken scannen</string>
+
+    <!-- SignUp Overview Screen ________________________________________________________________ -->
+    <string name="sign_up_overview">Anmeldeübersicht</string>
+    <string name="search">Suche</string>
+    <string name="empty_search">Suche leeren</string>
+    <string name="activity_at_information_tts">%1$s am %2$s um %3$s Uhr.</string>
+    <string name="activity_information_tts">%1$s am %2$s von %3$s Uhr bis %4$s Uhr.</string>
+    <string name="activity_meet_up_information_tts">Treffen: %1$s</string>
+    <string name="activity_location_information_tts">Wo? %1$s</string>
+    <string name="activity_who_information_tts">Wer? %1$s</string>
+    <string name="activity_contact_person_information_tts">Ansprechpartner*in: %1$s</string>
+    <string name="sign_up">Anmelden</string>
+    <string name="signed_up">Angemeldet</string>
+    <string name="show_details">Details einblenden</string>
+    <string name="hide_details">Details ausblenden</string>
+    <string name="meet_up_details_title">Treffen</string>
+    <string name="location_details_title">Wo?</string>
+    <string name="host_details_title">Wer?</string>
+    <string name="contact_person_details_title">Ansprechpartner*in</string>
+    <string name="no_additional_information_available">Keine weiteren Informationen verfügbar</string>
+    <string name="sign_out_dialog_title">Wirklich Abmelden?</string>
+    <string name="sign_out_dialog_desc">Bist du sicher, dass du dich von der Aktivität '%1$s' abmelden möchtest?</string>
+    <string name="sign_out_dialog_confirm">Ja, abmelden</string>
+
+    <!-- Staff Overview Screen _________________________________________________________________ -->
+    <string name="create_activity">Aktivität erstellen</string>
+
+    <!-- Staff Detail Screen ___________________________________________________________________ -->
+    <string name="starts">Startet</string>
+    <string name="ends">Endet</string>
+    <string name="not_provided">Nicht angegeben</string>
+    <string name="information">Informationen</string>
+    <string name="participants">Teilnehmer*innen</string>
+    <string name="no_participants_yet">Noch keine Teilnehmer*innen</string>
+
+    <!-- Navigation Drawer _____________________________________________________________________ -->
+    <string name="staff_area">Mitarbeiter*innen Bereich</string>
+    <string name="settings">Einstellungen</string>
+
+    <!-- Settings Screen ________________________________________________________________________ -->
+    <string name="tts_on_tap">Vorlesen bei Tippen</string>
+    <string name="tts_on_tap_desc">Aktiviert die Funktion durch Tippen bestimmte Informationen vorzulesen. (Hier gedrückt halten für mehr Informationen)</string>
+    <string name="tts_on_tap_adv_desc">Diese Einstellung ermöglicht es durch Tippen auf die folgenden Elemente Informationen vorlesen zu lassen:\n\u2022 Aktivitäten in der Aktivitätenübersicht</string>
+
+    <!-- Snackbar Messages _____________________________________________________________________ -->
+    <string name="user_created_feedback">Herzlich Willkommen %1$s</string>
+    <string name="server_not_started_desc">Server nicht gestartet. Bitte kontaktiere den administrator.</string>
+    <string name="server_error_desc">Server Fehler (%1$s). Bitte kontaktiere den administrator.</string>
+    <string name="unexpected_error_desc">Unerwarteter Fehler (%1$s). Bitte kontaktiere den administrator.</string>
+</resources>

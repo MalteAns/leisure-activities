@@ -35,6 +35,9 @@ dependencies {
     implementation(libs.koin.ktor)
     implementation(libs.koin.logger.slf4j)
 
+    // Http Client (for status page images)
+    implementation("io.ktor:ktor-client-cio:2.3.7")
+
     // Database
     implementation(libs.exposed.core)
     implementation(libs.exposed.jdbc)
@@ -42,7 +45,7 @@ dependencies {
     implementation(libs.exposed.java.time) // DateTime support
 
     testImplementation(libs.ktor.server.test.host)
-    testImplementation(libs.kotlin.testJunit)
+    testImplementation(libs.kotlin.test.junit)
 
     // ###
 }

@@ -1,7 +1,8 @@
 package de.malteans.sosactivities.services.impl
 
+import de.malteans.sosactivities.db.SignUpTable
 import de.malteans.sosactivities.db.UsersTable
-import de.malteans.sosactivities.models.User
+import de.malteans.sosactivities.model.User
 import de.malteans.sosactivities.services.UserService
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -10,7 +11,7 @@ import java.time.Instant
 class UserServiceImpl(
     private val db: Database
 ) : UserService {
-    override fun insert(id: String, firstName: String, lastName: String): Result<User> = transaction(db) {
+    override fun insert(id: String, firstName: String, lastName: String, tokenId: Int): Result<User> = transaction(db) {
         val exists = UsersTable.selectAll().where { UsersTable.id eq id }.limit(1).any()
         if (exists) {
             return@transaction Result.failure(IllegalArgumentException("UserId $id already in use."))
@@ -20,8 +21,9 @@ class UserServiceImpl(
             it[this.firstName] = firstName
             it[this.lastName] = lastName
             it[UsersTable.isStaff] = isStaff
-            it[createdAt] = Instant.now()
             it[updatedAt] = Instant.now()
+            it[createdAt] = Instant.now()
+            it[registrationTokenId] = tokenId
         }
         val row = UsersTable.selectAll().where { UsersTable.id eq id }.single()
         Result.success(row.toUser())
@@ -46,6 +48,18 @@ class UserServiceImpl(
             it[updatedAt] = Instant.now()
         }
         UsersTable.selectAll().where { UsersTable.id eq id }.single().toUser()
+    }
+
+    override fun getSignUps(id: String): Set<String> = transaction(db) {
+        SignUpTable
+            .select(SignUpTable.activityId)
+            .where {
+                SignUpTable.userId eq id
+            }
+            .map {
+                it[SignUpTable.activityId]
+            }
+            .toSet()
     }
 
     private fun ResultRow.toUser() = User(

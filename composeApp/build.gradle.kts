@@ -4,14 +4,16 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.androidApplication)
-    alias(libs.plugins.composeMultiplatform)
-    alias(libs.plugins.composeCompiler)
+    alias(libs.plugins.compose.multiplatform)
+    alias(libs.plugins.compose.compiler)
+
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 kotlin {
     androidTarget {
         compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
+            jvmTarget.set(JvmTarget.JVM_17)
         }
     }
 
@@ -25,24 +27,80 @@ kotlin {
         }
     }
 
+    jvm("desktop") {
+        compilations.all {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_17)
+                }
+            }
+        }
+    }
+
     sourceSets {
+        val desktopMain by getting
+
         androidMain.dependencies {
+            implementation(projects.dataStore)
+
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
+            implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
+            implementation(projects.shared)
+            implementation(projects.dataStore)
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
+            implementation(compose.materialIconsExtended) // More Icon
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodelCompose)
             implementation(libs.androidx.lifecycle.runtimeCompose)
-            implementation(projects.shared)
+
+            // Navigation
+            implementation(libs.jetbrains.compose.navigation)
+            implementation(libs.kotlinx.serialization.json)
+
+            // Koin (DI)
+            api(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+
+            // Ktor (Networking)
+            implementation(libs.bundles.ktor)
+
+            // Datetime
+            implementation(libs.kotlinx.datetime)
+
+            // Coil (Image Loading)
+            implementation(libs.bundles.coil)
+
+            // QR-Code Scanner (QR-Kit)
+            implementation(libs.qr.kit)
         }
-        commonTest.dependencies {
+        iosMain.dependencies {
+            implementation(projects.dataStore)
+
+            implementation(libs.ktor.client.darwin)
+        }
+        desktopMain.dependencies {
+            implementation(projects.dataStore)
+
             implementation(libs.kotlin.test)
+            implementation(compose.desktop.currentOs)
+            implementation(libs.kotlinx.coroutines.swing)
+            implementation(libs.kotlin.stdlib)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+
+            implementation(libs.ktor.client.okhttp)
         }
     }
 }
@@ -52,11 +110,12 @@ android {
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
-        applicationId = "de.malteans.sosactivities"
+        applicationId = libs.versions.projectApplicationId.get()
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 1
-        versionName = "1.0"
+        versionName = libs.versions.projectVersionName.get()
+        versionNameSuffix = libs.versions.projectVersionNameSuffix.get()
+        versionCode = libs.versions.projectVersionCode.get().toInt()
     }
     packaging {
         resources {
@@ -69,8 +128,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
 
@@ -78,3 +137,19 @@ dependencies {
     debugImplementation(compose.uiTooling)
 }
 
+compose.desktop {
+    application {
+        mainClass = "de.malteans.sosactivities.MainKt"
+
+        nativeDistributions {
+            packageName = libs.versions.desktop.packageName.get()
+            packageVersion = libs.versions.projectVersionName.get()
+
+            windows {
+                iconFile.set(project.file("src/desktopMain/resources/ic_launcher.ico"))
+            }
+
+            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
+        }
+    }
+}
