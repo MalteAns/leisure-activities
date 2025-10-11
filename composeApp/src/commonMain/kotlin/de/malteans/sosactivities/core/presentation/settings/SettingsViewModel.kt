@@ -3,6 +3,8 @@ package de.malteans.sosactivities.core.presentation.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.malteans.sosactivities.core.domain.DataStoreRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
@@ -33,7 +35,7 @@ class SettingsViewModel(
     fun onAction(action: SettingsAction) {
         when (action) {
             is SettingsAction.TtsEnabledChange -> {
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     dataStoreRepository.setTtsEnabled(action.enabled)
                 }
             }

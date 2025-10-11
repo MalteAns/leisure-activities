@@ -76,7 +76,9 @@ fun Application.module() {
         )
     }
 
-    val tokenConfig = TokenConfig()
+    val tokenConfig = TokenConfig(
+        secret = System.getenv("JWT_SECRET"),
+    )
 
     installJwtAuth(tokenConfig)
 

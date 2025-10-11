@@ -17,6 +17,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
@@ -45,6 +46,7 @@ import kotlin.time.ExperimentalTime
 fun ActivityDetailsScreenRoot(
     viewModel: ActivityDetailsViewModel = koinViewModel(),
     activityId: String,
+    onEditActivity: () -> Unit,
     onNavigateBack: () -> Unit,
 ) {
     LaunchedEffect(activityId) {
@@ -57,6 +59,7 @@ fun ActivityDetailsScreenRoot(
         state = state,
         onAction = { action ->
             when (action) {
+                ActivityDetailsAction.OnEditActivity -> onEditActivity()
                 ActivityDetailsAction.OnNavigateBack -> onNavigateBack()
                 else -> viewModel.onAction(action)
             }
@@ -90,12 +93,20 @@ fun ActivityDetailsScreen(
             CustomTopBar(
                 title = state.currentActivity?.title ?: "",
                 subtitle = state.currentActivity?.startsAt?.toDateTimeString()
-                    ?.plus(state.currentActivity.endsAt?.let { " - ${it.toTimeString()}" }),
+                    ?.plus(state.currentActivity.endsAt?.let { " - ${it.toTimeString()}" } ?: ""),
                 navigationIcon = {
                     IconButton({ onAction(ActivityDetailsAction.OnNavigateBack) }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = stringResource(Res.string.back)
+                        )
+                    }
+                },
+                actions = {
+                    FilledIconButton(onClick = { onAction(ActivityDetailsAction.OnEditActivity) }) {
+                        Icon(
+                            imageVector = Icons.Default.Edit,
+                            contentDescription = stringResource(Res.string.edit)
                         )
                     }
                 }

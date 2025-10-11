@@ -16,6 +16,7 @@ import de.malteans.sosactivities.core.presentation.settings.SettingsScreenRoot
 import de.malteans.sosactivities.registration.presentation.RegistrationScreenRoot
 import de.malteans.sosactivities.signUp.presentation.SignUpOverviewScreenRoot
 import de.malteans.sosactivities.staff.presentation.activityDetails.ActivityDetailsScreenRoot
+import de.malteans.sosactivities.staff.presentation.modifyActivity.ModifyActivityScreenRoot
 import de.malteans.sosactivities.staff.presentation.overview.StaffOverviewScreenRoot
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
@@ -69,7 +70,7 @@ fun NavGraph(
         navigation<Route.StaffNav>(
             startDestination = Route.Staff.Overview
         ) {
-            composable<Route.Staff.Overview> { backStackEntry ->
+            composable<Route.Staff.Overview> {
                 setCurScreen(CurScreen.STAFF_AREA)
                 StaffOverviewScreenRoot(
                     showDrawer = showDrawer,
@@ -84,10 +85,12 @@ fun NavGraph(
             composable<Route.Staff.ActivityDetails>(
                 enterTransition = { slideInHorizontally { it } },
                 popExitTransition = { slideOutHorizontally { it } },
+                popEnterTransition = { EnterTransition.None }
             ) { backStackEntry ->
                 val activityId = backStackEntry.toRoute<Route.Staff.ActivityDetails>().activityId
                 ActivityDetailsScreenRoot(
                     activityId = activityId,
+                    onEditActivity = { navController.navigate(Route.Staff.ModifyActivity(activityId)) },
                     onNavigateBack = { navController.popBackStack() }
                 )
             }
@@ -96,6 +99,10 @@ fun NavGraph(
                 popExitTransition = { slideOutHorizontally { it } },
             ) { backStackEntry ->
                 val activityId = backStackEntry.toRoute<Route.Staff.ModifyActivity>().activityId
+                ModifyActivityScreenRoot(
+                    activityId = activityId,
+                    navigateBack = { navController.popBackStack() }
+                )
             }
         }
     }

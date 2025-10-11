@@ -15,7 +15,7 @@ import de.malteans.sosactivities.core.presentation.components.CustomTopBar
 import de.malteans.sosactivities.core.presentation.settings.components.InformationTextDialog
 import de.malteans.sosactivities.core.presentation.settings.components.SettingsToggleItem
 import de.malteans.sosactivities.core.presentation.util.UiText
-import de.malteans.sosactivities.core.presentation.util.currentPlattform
+import de.malteans.sosactivities.core.presentation.util.currentPlatform
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 import sosactivities.composeapp.generated.resources.*
@@ -74,7 +74,7 @@ fun SettingsScreen(
                 onLongClick = {
                     informationTextToShow = UiText.Resource(Res.string.tts_on_tap_adv_desc)
                 },
-                enabled = currentPlattform().isMobile,
+                enabled = currentPlatform().isMobile,
                 modifier = Modifier
                     .clip(MaterialTheme.shapes.medium)
                     .fillMaxWidth()

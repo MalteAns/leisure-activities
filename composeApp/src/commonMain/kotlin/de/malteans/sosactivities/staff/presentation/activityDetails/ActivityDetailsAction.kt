@@ -2,6 +2,7 @@ package de.malteans.sosactivities.staff.presentation.activityDetails
 
 sealed interface ActivityDetailsAction {
     data object OnNavigateBack : ActivityDetailsAction
+    data object OnEditActivity : ActivityDetailsAction
     data object ClearError : ActivityDetailsAction
 
     data class OnTabSelected(val index: Int) : ActivityDetailsAction

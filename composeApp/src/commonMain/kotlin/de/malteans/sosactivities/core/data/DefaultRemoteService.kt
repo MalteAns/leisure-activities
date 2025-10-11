@@ -133,6 +133,16 @@ class DefaultRemoteService(
         }
     }
 
+    override suspend fun deleteActivities(
+        activityIds: List<String>
+    ) = safeCall<Unit> {
+        client.delete(Endpoints.AllActivities.url) {
+            header("Authorization", "Bearer ${dataStoreRepository.getToken()}")
+            contentType(ContentType.Application.Json)
+            setBody(DeleteActivitiesReq(activityIds))
+        }
+    }
+
     override suspend fun getRoster(
         activityId: String
     ) = safeCall<RosterDto> {

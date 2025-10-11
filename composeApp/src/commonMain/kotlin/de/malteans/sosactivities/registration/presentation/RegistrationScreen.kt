@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.malteans.sosactivities.core.presentation.util.SnackbarManager
 import de.malteans.sosactivities.core.presentation.util.UiText
-import de.malteans.sosactivities.core.presentation.util.currentPlattform
+import de.malteans.sosactivities.core.presentation.util.currentPlatform
 import de.malteans.sosactivities.model.ext.displayName
 import de.malteans.sosactivities.registration.presentation.components.QrScannerScreen
 import org.jetbrains.compose.resources.stringResource
@@ -158,7 +158,7 @@ fun RegistrationScreen(
                             )
                         }
                     }
-                    currentPlattform().isMobile -> {
+                    currentPlatform().isMobile -> {
                         IconButton(onClick = { showScanner = true }) {
                             Icon(
                                 imageVector = Icons.Default.QrCodeScanner,

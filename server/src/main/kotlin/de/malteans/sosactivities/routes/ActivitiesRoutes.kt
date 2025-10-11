@@ -1,6 +1,7 @@
 package de.malteans.sosactivities.routes
 
 import de.malteans.sosactivities.dto.CreateActivityReq
+import de.malteans.sosactivities.dto.DeleteActivitiesReq
 import de.malteans.sosactivities.dto.UpdateActivityReq
 import de.malteans.sosactivities.model.Role
 import de.malteans.sosactivities.model.ext.toDto
@@ -41,6 +42,14 @@ fun Route.registerActivityRoutes(
                 call.respond(HttpStatusCode.Created, createdActivity.toDto(
                     createdActivity.imageId?.let { imageService.getUrl(it) }
                 ))
+            }
+            delete {
+                call.requireRole(Role.STAFF, Role.ADMIN)
+                val req = call.receive<DeleteActivitiesReq>()
+                req.activityIds.forEach { id ->
+                    activityService.delete(id)
+                }
+                call.respond(HttpStatusCode.NoContent)
             }
             patch("{id}") {
                 call.requireRole(Role.STAFF, Role.ADMIN)

@@ -64,6 +64,10 @@ interface RemoteService {
         activityId: String
     ): Result<Unit>
 
+    suspend fun deleteActivities(
+        activityIds: List<String>
+    ): Result<Unit>
+
     suspend fun getRoster(
         activityId: String
     ): Result<RosterDto>

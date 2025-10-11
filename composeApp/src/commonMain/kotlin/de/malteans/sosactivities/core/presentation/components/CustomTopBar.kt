@@ -13,7 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import de.malteans.sosactivities.core.presentation.util.currentPlattform
+import de.malteans.sosactivities.core.presentation.util.currentPlatform
 import org.jetbrains.compose.resources.stringResource
 import sosactivities.composeapp.generated.resources.Res
 import sosactivities.composeapp.generated.resources.menu
@@ -37,7 +37,7 @@ fun CustomTopBar(
     actions: @Composable (RowScope.() -> Unit) = {},
     modifier: Modifier = Modifier
 ) {
-    if (currentPlattform().isMobile || onOpenDrawer == null) {
+    if (currentPlatform().isMobile || onOpenDrawer == null) {
         TopAppBar(
             title = {
                 Column {
@@ -66,7 +66,7 @@ fun CustomTopBar(
             actions = { actions.invoke(this) },
             modifier = modifier
                 .clip(
-                    shape = if (currentPlattform().isMobile) MaterialTheme.shapes.extraLarge.copy(
+                    shape = if (currentPlatform().isMobile) MaterialTheme.shapes.extraLarge.copy(
                         topStart = CornerSize(0.dp),
                         topEnd = CornerSize(0.dp),
                     ) else RectangleShape

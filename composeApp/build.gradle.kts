@@ -57,7 +57,7 @@ kotlin {
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
-            implementation(compose.materialIconsExtended) // More Icon
+            implementation(compose.materialIconsExtended) // More Icons
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -84,6 +84,9 @@ kotlin {
 
             // QR-Code Scanner (QR-Kit)
             implementation(libs.qr.kit)
+
+            // Back Handler
+            implementation(libs.ui.backhandler)
         }
         iosMain.dependencies {
             implementation(projects.dataStore)
@@ -93,12 +96,12 @@ kotlin {
         desktopMain.dependencies {
             implementation(projects.dataStore)
 
-            implementation(libs.kotlin.test)
-            implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutines.swing)
-            implementation(libs.kotlin.stdlib)
-            implementation(libs.koin.compose)
-            implementation(libs.koin.compose.viewmodel)
+//            implementation(libs.kotlin.test)
+//            implementation(compose.desktop.currentOs)
+//            implementation(libs.kotlinx.coroutines.swing)
+//            implementation(libs.kotlin.stdlib)
+//            implementation(libs.koin.compose)
+//            implementation(libs.koin.compose.viewmodel)
 
             implementation(libs.ktor.client.okhttp)
         }

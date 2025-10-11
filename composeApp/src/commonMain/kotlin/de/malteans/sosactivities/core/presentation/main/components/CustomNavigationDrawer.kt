@@ -4,7 +4,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import de.malteans.sosactivities.core.presentation.util.currentPlattform
+import de.malteans.sosactivities.core.presentation.util.currentPlatform
 
 /**
  * @param[drawerState] Only for mobile (modal) Drawer
@@ -14,13 +14,18 @@ import de.malteans.sosactivities.core.presentation.util.currentPlattform
 @Composable
 fun CustomNavigationDrawer(
     drawerContent: @Composable () -> Unit,
-    modifier: Modifier = Modifier,
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
     gesturesEnabled: Boolean = true,
     scrimColor: Color = DrawerDefaults.scrimColor,
+    visible: Boolean = gesturesEnabled,
+    modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ) {
-    if (currentPlattform().isMobile) {
+    if (!visible) {
+        content()
+        return
+    }
+    if (currentPlatform().isMobile) {
         ModalNavigationDrawer(
             drawerContent = drawerContent,
             modifier = modifier,

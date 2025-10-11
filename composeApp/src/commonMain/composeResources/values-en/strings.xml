@@ -9,6 +9,11 @@
     <string name="cancel">Cancel</string>
     <string name="refresh">Refresh</string>
     <string name="back">Back</string>
+    <string name="save">Save</string>
+    <string name="image">Image</string>
+    <string name="edit">Edit</string>
+    <string name="next">Next</string>
+    <string name="ok">OK</string>
 
     <!-- Create User Screen _____________________________________________________________________ -->
     <string name="first_name">First name</string>
@@ -17,6 +22,7 @@
     <string name="name_support_text">The name must just contain letters, spaces and hyphens.</string>
     <string name="registration_token">Registration-Token</string>
     <string name="scan_registration_token">Scan registration token</string>
+    <string name="user_created_feedback">Welcome %1$s</string>
 
     <!-- SignUp Overview Screen ________________________________________________________________ -->
     <string name="sign_up_overview">Sign Up Overview</string>
@@ -43,6 +49,9 @@
 
     <!-- Staff Overview Screen _________________________________________________________________ -->
     <string name="create_activity">Create activity</string>
+    <string name="activate_deleting">Activate deleting</string>
+    <string name="cancel_deleting">Cancel deleting</string>
+    <string name="delete_activities">Delete activities</string>
 
     <!-- Staff Detail Screen ___________________________________________________________________ -->
     <string name="starts">Starts</string>
@@ -51,6 +60,28 @@
     <string name="information">Information</string>
     <string name="participants">Participants</string>
     <string name="no_participants_yet">No participants yet</string>
+
+    <!-- Staff Modify Screen ___________________________________________________________________ -->
+    <string name="edit_activity_topbar_title">Edit '%1$s'</string>
+    <string name="title">Title</string>
+    <string name="meet_up_information">Meet-up information</string>
+    <string name="activity_location">Activity location</string>
+    <string name="host_information">Host information</string>
+    <string name="contact_person_information">Contact person information</string>
+    <string name="edit_start">Edit start</string>
+    <string name="edit_end">Edit end</string>
+    <string name="show_image">Show image</string>
+    <string name="hide_image">Hide image</string>
+    <string name="unsaved_changes">Unsaved changes</string>
+    <string name="unsaved_changes_desc">There are unsaved changes, which will be discarded on exit.</string>
+    <string name="discard_changes">Discard changes</string>
+    <string name="activity_created">Activity created</string>
+    <string name="changes_saved">Saved changes</string>
+
+    <!-- DateTime Picker Dialog ________________________________________________________________ -->
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="select_date">Select date</string>
 
     <!-- Navigation Drawer _____________________________________________________________________ -->
     <string name="staff_area">Staff area</string>
@@ -61,8 +92,7 @@
     <string name="tts_on_tap_desc">Activates the option to read specific information out loud on tap. (Long press here for more information)</string>
     <string name="tts_on_tap_adv_desc">This setting enables reading information of the following elements out loud by tapping on them:\n\u2022 Activities in the registration overview</string>
 
-    <!-- Snackbar Messages _____________________________________________________________________ -->
-    <string name="user_created_feedback">Welcome %1$s</string>
+    <!-- Error Messages _________________________________________________________________________ -->
     <string name="server_not_started_desc">Server not started. Please contact the administrator.</string>
     <string name="server_error_desc">Server Error (%1$s). Please contact the administrator.</string>
     <string name="unexpected_error_desc">Unexpected Error (%1$s). Please contact the administrator.</string>

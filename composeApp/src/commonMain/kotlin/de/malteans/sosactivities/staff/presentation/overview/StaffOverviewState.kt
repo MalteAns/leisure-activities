@@ -9,4 +9,9 @@ data class StaffOverviewState(
     val loadingActivitiesError: Throwable? = null,
 
     val activitiesToShow: List<ActivityWithImageUrl> = emptyList(),
+
+    val deletingActivities: Boolean = false,
+    val activityIdsToDelete: List<String> = emptyList(),
+    val deletingActivitiesInProgress: Boolean = false,
+    val deletingActivitiesError: Throwable? = null,
 )

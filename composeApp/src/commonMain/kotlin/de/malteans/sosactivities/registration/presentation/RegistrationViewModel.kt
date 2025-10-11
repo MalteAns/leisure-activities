@@ -3,6 +3,8 @@ package de.malteans.sosactivities.registration.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import de.malteans.sosactivities.registration.domain.RegistrationService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -31,7 +33,7 @@ class RegistrationViewModel(
                     validToken = false,
                 ) }
                 if (action.token.length == 128 && action.token.all { it.isLetterOrDigit() }) {
-                    viewModelScope.launch {
+                    viewModelScope.launch(Dispatchers.IO) {
                         _state.update { it.copy(validToken = null) }
                         registrationService.checkToken(action.token)
                             .onSuccess { result ->
@@ -48,7 +50,7 @@ class RegistrationViewModel(
             }
             is RegistrationAction.OnFirstNameChange -> _state.update { it.copy(firstName = action.firstName) }
             is RegistrationAction.OnLastNameChange -> _state.update { it.copy(lastName = action.lastName) }
-            is RegistrationAction.Submit -> viewModelScope.launch {
+            is RegistrationAction.Submit -> viewModelScope.launch(Dispatchers.IO) {
                 _state.update { it.copy(isLoading = true) }
                 registrationService.createUser(
                     registrationToken = state.value.registrationToken,

@@ -16,10 +16,10 @@ val module = module {
 
     single<Database> {
         Database.connect(
-            url = "jdbc:mariadb://192.168.178.129:3306/sosActivities",
+            url = "jdbc:mariadb://192.168.178.53:3306/sosActivities",
             driver = "org.mariadb.jdbc.Driver",
-            user = "root",
-            password = "NPf4IfvrHUBElPllKdrZ",
+            user = System.getenv("DB_USER"),
+            password = System.getenv("DB_PASSWORD"),
         )
     }
 

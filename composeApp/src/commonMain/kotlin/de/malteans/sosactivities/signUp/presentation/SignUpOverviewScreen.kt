@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.malteans.sosactivities.core.presentation.components.CustomTopBar
 import de.malteans.sosactivities.core.presentation.util.SnackbarManager
-import de.malteans.sosactivities.core.presentation.util.currentPlattform
+import de.malteans.sosactivities.core.presentation.util.currentPlatform
 import de.malteans.sosactivities.model.ActivityWithImageUrl
 import de.malteans.sosactivities.signUp.presentation.components.ActivityItem
 import de.malteans.sosactivities.signUp.presentation.components.CustomPullToRefreshBox
@@ -141,7 +141,7 @@ fun SignUpOverviewScreen(
                     modifier = Modifier
                         .weight(1f)
                 )
-                if (currentPlattform().isDesktop) {
+                if (currentPlatform().isDesktop) {
                     IconButton(
                         onClick = { onAction(SignUpOverviewAction.RefreshCurrentActivities) },
                         enabled = !state.loadingActivities,

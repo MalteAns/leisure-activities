@@ -9,14 +9,20 @@
     <string name="cancel">Abbrechen</string>
     <string name="refresh">Aktualisieren</string>
     <string name="back">Zurück</string>
+    <string name="save">Speichern</string>
+    <string name="image">Bild</string>
+    <string name="edit">Bearbeiten</string>
+    <string name="next">Weiter</string>
+    <string name="ok">OK</string>
 
-    <!-- Create User Screen ____________________________________________________________________ -->
+    <!-- Registration Screen ____________________________________________________________________ -->
     <string name="first_name">Vorname</string>
     <string name="last_name">Nachname</string>
     <string name="create_user">Benutzer erstellen</string>
     <string name="name_support_text">Der Name darf nur Buchstaben, Leerzeichen und Bindestriche enthalten.</string>
     <string name="registration_token">Registrierungstoken</string>
     <string name="scan_registration_token">Registrierungstoken scannen</string>
+    <string name="user_created_feedback">Herzlich Willkommen %1$s</string>
 
     <!-- SignUp Overview Screen ________________________________________________________________ -->
     <string name="sign_up_overview">Anmeldeübersicht</string>
@@ -43,6 +49,9 @@
 
     <!-- Staff Overview Screen _________________________________________________________________ -->
     <string name="create_activity">Aktivität erstellen</string>
+    <string name="activate_deleting">Löschen aktivieren</string>
+    <string name="cancel_deleting">Löschen abbrechen</string>
+    <string name="delete_activities">Aktivitäten löschen</string>
 
     <!-- Staff Detail Screen ___________________________________________________________________ -->
     <string name="starts">Startet</string>
@@ -51,6 +60,28 @@
     <string name="information">Informationen</string>
     <string name="participants">Teilnehmer*innen</string>
     <string name="no_participants_yet">Noch keine Teilnehmer*innen</string>
+
+    <!-- Staff Modify Screen ___________________________________________________________________ -->
+    <string name="edit_activity_topbar_title">'%1$s' bearbeiten</string>
+    <string name="title">Titel</string>
+    <string name="meet_up_information">Treffpunkt-Informationen</string>
+    <string name="activity_location">Aktivitätsort</string>
+    <string name="host_information">Leiter*innen Informationen</string>
+    <string name="contact_person_information">Ansprechpartner*in Information</string>
+    <string name="edit_start">Start bearbeiten</string>
+    <string name="edit_end">Ende bearbeiten</string>
+    <string name="show_image">Bild einblenden</string>
+    <string name="hide_image">Bild ausblenden</string>
+    <string name="unsaved_changes">Ungespeicherte Änderungen</string>
+    <string name="unsaved_changes_desc">Es gibt ungespeicherte Änderungen, diese werden beim Verlassen verworfen.</string>
+    <string name="discard_changes">Änderungen verwerfen</string>
+    <string name="activity_created">Aktivität erstellt</string>
+    <string name="changes_saved">Änderungen gespeichert</string>
+
+    <!-- DateTime Picker Dialog ________________________________________________________________ -->
+    <string name="date">Datum</string>
+    <string name="time">Uhrzeit</string>
+    <string name="select_date">Datum wählen</string>
 
     <!-- Navigation Drawer _____________________________________________________________________ -->
     <string name="staff_area">Mitarbeiter*innen Bereich</string>
@@ -61,8 +92,7 @@
     <string name="tts_on_tap_desc">Aktiviert die Funktion durch Tippen bestimmte Informationen vorzulesen. (Hier gedrückt halten für mehr Informationen)</string>
     <string name="tts_on_tap_adv_desc">Diese Einstellung ermöglicht es durch Tippen auf die folgenden Elemente Informationen vorlesen zu lassen:\n\u2022 Aktivitäten in der Aktivitätenübersicht</string>
 
-    <!-- Snackbar Messages _____________________________________________________________________ -->
-    <string name="user_created_feedback">Herzlich Willkommen %1$s</string>
+    <!-- Error Messages _________________________________________________________________________ -->
     <string name="server_not_started_desc">Server nicht gestartet. Bitte kontaktiere den administrator.</string>
     <string name="server_error_desc">Server Fehler (%1$s). Bitte kontaktiere den administrator.</string>
     <string name="unexpected_error_desc">Unerwarteter Fehler (%1$s). Bitte kontaktiere den administrator.</string>

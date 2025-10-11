@@ -17,11 +17,11 @@ androidx-appcompat = "1.7.1"
 androidx-core = "1.17.0"
 androidx-espresso = "3.7.0"
 androidx-lifecycle = "2.9.4"
-composeMultiplatform = "1.9.0"
+compose-multiplatform = "1.9.0"
 junit = "4.13.2"
 koinKtor = "4.1.1"
 kotlin = "2.2.20"
-kotlinxDatetime = "0.7.1"
+kotlinxDatetime = "0.7.1-0.6.x-compat" # "-0.6.x-compat" for compatibility with outdated material3 for desktop. See https://youtrack.jetbrains.com/projects/CMP/issues/CMP-8519/Migrate-to-kotlinx-datetime-0.7.1
 kotlinxSerializationJson = "1.9.0"
 ktor = "3.3.0"
 logback = "1.5.18"
@@ -97,6 +97,10 @@ coil-compose-core = { module = "io.coil-kt.coil3:coil-compose-core", version.ref
 coil-network-ktor2 = { module = "io.coil-kt.coil3:coil-network-ktor2", version.ref = "coil3" }
 coil-network-ktor3 = { module = "io.coil-kt.coil3:coil-network-ktor3", version.ref = "coil3" }
 coil-mp = { module = "io.coil-kt.coil3:coil", version.ref = "coil3" }
+# Back Handler
+ui-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler", version.ref= "compose-multiplatform" }
+# QR Code
+qr-kit = { module = "network.chaintech:qr-kit", version.ref = "qrKit" }
 
 # == App Android Dependencies ============================
 koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
@@ -115,15 +119,13 @@ datastore-preferences = { module = "androidx.datastore:datastore-preferences", v
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinStdlib" }
 androidx-runner = { group = "androidx.test", name = "runner", version.ref = "runner" }
 androidx-core = { group = "androidx.test", name = "core", version.ref = "core" }
-qr-kit = { module = "network.chaintech:qr-kit", version.ref = "qrKit" }
-
 # ???
 
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 androidLibrary = { id = "com.android.library", version.ref = "agp" }
-compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
+compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }

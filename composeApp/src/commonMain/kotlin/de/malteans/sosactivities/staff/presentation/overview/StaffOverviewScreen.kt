@@ -1,6 +1,7 @@
 package de.malteans.sosactivities.staff.presentation.overview
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.expandIn
 import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -9,15 +10,10 @@ import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
@@ -26,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.malteans.sosactivities.core.presentation.components.CustomTopBar
 import de.malteans.sosactivities.core.presentation.util.SnackbarManager
-import de.malteans.sosactivities.core.presentation.util.currentPlattform
+import de.malteans.sosactivities.core.presentation.util.currentPlatform
 import de.malteans.sosactivities.signUp.presentation.components.CustomPullToRefreshBox
 import de.malteans.sosactivities.staff.presentation.overview.components.CompactActivityItem
 import kotlinx.coroutines.Dispatchers
@@ -51,9 +47,9 @@ fun StaffOverviewScreenRoot(
             when (action) {
                 is StaffOverviewAction.ShowDrawer -> showDrawer(action.show)
                 StaffOverviewAction.OnCreateActivity -> onModifyActivity(null)
-                is StaffOverviewAction.OnModifyActivity -> onModifyActivity(action.activityId)
+                is StaffOverviewAction.OnEditActivity -> onModifyActivity(action.activityId)
                 is StaffOverviewAction.OnShowActivity -> onShowActivity(action.activityId)
-                else -> viewModel.onOverviewAction(action)
+                else -> viewModel.onAction(action)
             }
         }
     )
@@ -70,6 +66,15 @@ fun StaffOverviewScreen(
 
     LaunchedEffect(state.loadingActivitiesError) {
         state.loadingActivitiesError?.let { error ->
+            scope.launch(Dispatchers.IO) {
+                SnackbarManager.showThrowableSnackbar(error)
+                onAction(StaffOverviewAction.ClearError)
+            }
+        }
+    }
+
+    LaunchedEffect(state.deletingActivitiesError) {
+        state.deletingActivitiesError?.let { error ->
             scope.launch(Dispatchers.IO) {
                 SnackbarManager.showThrowableSnackbar(error)
                 onAction(StaffOverviewAction.ClearError)
@@ -97,11 +102,77 @@ fun StaffOverviewScreen(
             )
         },
         floatingActionButton = {
-            FloatingActionButton({ onAction(StaffOverviewAction.OnCreateActivity)} ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = stringResource(Res.string.create_activity)
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                val animationDuration = 150
+                val enterAnimation = expandIn(
+                    animationSpec = tween(durationMillis = animationDuration, delayMillis = animationDuration),
+                    expandFrom = Alignment.Center,
                 )
+                val exitAnimation = shrinkOut(
+                    animationSpec = tween(durationMillis = animationDuration),
+                    shrinkTowards = Alignment.Center,
+                )
+                SmallFloatingActionButton(
+                    onClick = { onAction(StaffOverviewAction.OnDeletingActivitiesChange(!state.deletingActivities)) },
+                    containerColor = MaterialTheme.colorScheme.surfaceBright,
+                    contentColor = MaterialTheme.colorScheme.primary,
+                ) {
+                    AnimatedVisibility(!state.deletingActivities, enter = enterAnimation, exit = exitAnimation) {
+                        Icon(
+                            imageVector = Icons.Default.DeleteOutline,
+                            contentDescription = stringResource(Res.string.activate_deleting)
+                        )
+                    }
+                    AnimatedVisibility(state.deletingActivities, enter = enterAnimation, exit = exitAnimation) {
+                        Icon(
+                            imageVector = Icons.Default.Clear,
+                            contentDescription = stringResource(Res.string.cancel_deleting)
+                        )
+                    }
+                }
+                val defaultColor = FloatingActionButtonDefaults.containerColor
+                val errorColor = MaterialTheme.colorScheme.errorContainer
+                val containerColor = remember { androidx.compose.animation.Animatable(defaultColor) }
+                LaunchedEffect(state.deletingActivities) {
+                    containerColor.animateTo(
+                        targetValue = if (state.deletingActivities) errorColor else defaultColor,
+                        animationSpec = tween(durationMillis = animationDuration * 2)
+                    )
+                }
+                FloatingActionButton(
+                    onClick = {
+                        focusManager.clearFocus()
+                        if (!state.deletingActivities)
+                            onAction(StaffOverviewAction.OnCreateActivity)
+                        else if (!state.deletingActivitiesInProgress && state.activityIdsToDelete.isNotEmpty())
+                            onAction(StaffOverviewAction.OnSubmitDelete)
+                    },
+                    containerColor = containerColor.value,
+                ) {
+                    AnimatedVisibility(!state.deletingActivities, enter = enterAnimation, exit = exitAnimation) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = stringResource(Res.string.create_activity)
+                        )
+                    }
+                    AnimatedVisibility(state.deletingActivities, enter = enterAnimation, exit = exitAnimation) {
+                        if (!state.deletingActivitiesInProgress) {
+                            Icon(
+                                imageVector = Icons.Default.DeleteForever,
+                                contentDescription = stringResource(Res.string.delete_activities)
+                            )
+                        } else {
+                            CircularProgressIndicator(
+                                strokeWidth = 2.dp,
+                                color = MaterialTheme.colorScheme.onErrorContainer,
+                                modifier = Modifier
+                                    .size(24.dp)
+                            )
+                        }
+                    }
+                }
             }
         }
     ) { paddingValues ->
@@ -142,13 +213,13 @@ fun StaffOverviewScreen(
                     modifier = Modifier
                         .weight(1f)
                 )
-                if (currentPlattform().isDesktop) {
+                if (currentPlatform().isDesktop) {
                     IconButton(
                         onClick = { onAction(StaffOverviewAction.RefreshActivities) },
-                        enabled = !state.loadingActivities,
+                        enabled = !(state.loadingActivities || state.deletingActivitiesInProgress),
                         modifier = Modifier.padding(top = 8.dp),
                     ) {
-                        if (!state.loadingActivities) {
+                        if (!(state.loadingActivities || state.deletingActivitiesInProgress)) {
                             Icon(
                                 imageVector = Icons.Default.Refresh,
                                 contentDescription = stringResource(Res.string.refresh),
@@ -165,7 +236,7 @@ fun StaffOverviewScreen(
             }
             Spacer(Modifier.height(16.dp))
             CustomPullToRefreshBox(
-                isRefreshing = state.loadingActivities,
+                isRefreshing = state.loadingActivities || state.deletingActivitiesInProgress,
                 onRefresh = { onAction(StaffOverviewAction.RefreshActivities) },
                 state = pullToRefreshState,
                 modifier = Modifier
@@ -179,8 +250,21 @@ fun StaffOverviewScreen(
                     items(state.activitiesToShow) { activity ->
                         CompactActivityItem(
                             activity = activity,
-                            onClick = { onAction(StaffOverviewAction.OnShowActivity(activity.id)) }
+                            onClick = { onAction(StaffOverviewAction.OnShowActivity(activity.id)) },
+                            onEditClick = { onAction(StaffOverviewAction.OnEditActivity(activity.id)) },
+                            onLongClick = { onAction(StaffOverviewAction.OnSelectActivityToDelete(activity.id)) },
+                            showCheckBox = state.deletingActivities,
+                            checkBoxValue = state.activityIdsToDelete.contains(activity.id),
+                            onCheckBoxValueChange = { isChecked ->
+                                if (state.deletingActivities && !state.deletingActivitiesInProgress) {
+                                    if (isChecked) onAction(StaffOverviewAction.OnSelectActivityToDelete(activity.id))
+                                    else onAction(StaffOverviewAction.OnDeselectActivityToDelete(activity.id))
+                                }
+                            },
                         )
+                    }
+                    item {
+                        Spacer(modifier = Modifier.height(128.dp))
                     }
                 }
             }

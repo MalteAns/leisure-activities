@@ -20,6 +20,7 @@ import de.malteans.sosactivities.signUp.presentation.SignUpViewModel
 import de.malteans.sosactivities.staff.data.DefaultStaffService
 import de.malteans.sosactivities.staff.domain.StaffService
 import de.malteans.sosactivities.staff.presentation.activityDetails.ActivityDetailsViewModel
+import de.malteans.sosactivities.staff.presentation.modifyActivity.ModifyActivityViewModel
 import de.malteans.sosactivities.staff.presentation.overview.StaffOverviewViewModel
 import io.ktor.client.*
 import org.koin.core.module.Module
@@ -53,6 +54,9 @@ val sharedModule = module {
         get()
     ) }
     viewModel { ActivityDetailsViewModel(
+        get()
+    ) }
+    viewModel { ModifyActivityViewModel(
         get()
     ) }
     viewModel { SettingsViewModel(

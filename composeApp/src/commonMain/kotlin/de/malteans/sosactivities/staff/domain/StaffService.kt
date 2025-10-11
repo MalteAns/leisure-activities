@@ -34,7 +34,7 @@ interface StaffService {
         imageId: String?,
     ): Result<ActivityWithImageUrl>
 
-    suspend fun deleteActivity(activityId: String): Result<Unit>
+    suspend fun deleteActivities(activityIds: List<String>): Result<Unit>
 
     suspend fun getRoster(activityId: String): Result<Roster>
 

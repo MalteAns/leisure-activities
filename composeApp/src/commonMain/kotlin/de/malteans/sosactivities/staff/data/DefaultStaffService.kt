@@ -21,7 +21,7 @@ class DefaultStaffService(
     }
 
     override suspend fun getAllActivities(): Result<List<ActivityWithImageUrl>> {
-        return remoteService.getAllActivities()
+        return remoteService.getAllActivities(null, null)
             .map { list -> list.map {
                 it.toDomainWithImageUrl(Constants.BASE_URL)
             } }
@@ -73,8 +73,8 @@ class DefaultStaffService(
         ).map { it.toDomainWithImageUrl(Constants.BASE_URL) }
     }
 
-    override suspend fun deleteActivity(activityId: String): Result<Unit> {
-        return remoteService.deleteActivity(activityId)
+    override suspend fun deleteActivities(activityIds: List<String>): Result<Unit> {
+        return remoteService.deleteActivities(activityIds)
     }
 
     override suspend fun getRoster(activityId: String): Result<Roster> {

@@ -15,6 +15,8 @@ import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.unit.dp
 import de.malteans.sosactivities.core.presentation.util.SnackbarManager
 import de.malteans.sosactivities.core.presentation.util.UiText
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import qrscanner.CameraLens
 import qrscanner.QrScanner
@@ -46,7 +48,7 @@ fun QrScannerScreen(
                     onCompletion = onScanned,
                     imagePickerHandler = {},
                     onFailure = {
-                        coroutineScope.launch {
+                        coroutineScope.launch(Dispatchers.IO) {
                             if (it.isEmpty()) {
                                 SnackbarManager.showSnackbar(UiText.DynamicString("Invalid qr code"))
                             } else {

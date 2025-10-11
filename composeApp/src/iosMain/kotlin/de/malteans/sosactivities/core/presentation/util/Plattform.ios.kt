@@ -1,3 +1,3 @@
 package de.malteans.sosactivities.core.presentation.util
 
-actual fun currentPlattform(): Plattform = Plattform.IOS
+actual fun currentPlatform(): Platform = Platform.IOS

@@ -24,7 +24,7 @@ fun ActivityWithImageUrl.toUiTexts(): List<UiText> {
             arrayOf(this.title, this.startsAt.toDateString(), this.startsAt.toTimeString())
         ) else UiText.Resource(
             Res.string.activity_information_tts,
-            arrayOf(this.title, this.startsAt.toDateString(), this.startsAt.toTimeString(), this.endsAt!!.toDateString())
+            arrayOf(this.title, this.startsAt.toDateString(), this.startsAt.toTimeString(), this.endsAt!!.toTimeString())
         )
     )
     listOf<Pair<StringResource, String>>(

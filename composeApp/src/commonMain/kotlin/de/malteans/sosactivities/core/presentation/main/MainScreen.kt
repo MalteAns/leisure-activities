@@ -50,7 +50,10 @@ fun MainScreen() {
 
     val scope = rememberCoroutineScope()
     val navController = rememberNavController()
-    var curScreen by rememberSaveable { mutableStateOf(CurScreen.SIGN_UP) }
+    var curScreen by rememberSaveable { mutableStateOf(
+        if (mainService.isUserCreated()) CurScreen.SIGN_UP
+        else CurScreen.REGISTER
+    ) }
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 
     LaunchedEffect(curScreen) {
@@ -67,7 +70,7 @@ fun MainScreen() {
     ) {
         CustomNavigationDrawer(
             drawerState = drawerState,
-            gesturesEnabled = curScreen != CurScreen.REGISTER,
+            visible = curScreen != CurScreen.REGISTER,
             drawerContent = {
                 NavDrawerSheet(
                     navController = navController,

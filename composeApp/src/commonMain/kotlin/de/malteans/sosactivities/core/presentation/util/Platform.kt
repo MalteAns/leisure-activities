@@ -1,6 +1,6 @@
 package de.malteans.sosactivities.core.presentation.util
 
-enum class Plattform {
+enum class Platform {
     ANDROID,
     IOS,
     DESKTOP,
@@ -12,4 +12,4 @@ enum class Plattform {
         get() = this == DESKTOP
 }
 
-expect fun currentPlattform(): Plattform
+expect fun currentPlatform(): Platform

@@ -10,7 +10,7 @@ import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import de.malteans.sosactivities.core.presentation.util.currentPlattform
+import de.malteans.sosactivities.core.presentation.util.currentPlatform
 
 /** Just a normal box for desktop (bc buggy) */
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,7 +30,7 @@ fun CustomPullToRefreshBox(
     modifier: Modifier = Modifier,
     content: @Composable BoxScope.() -> Unit,
 ) {
-    if (currentPlattform().isMobile) {
+    if (currentPlatform().isMobile) {
         PullToRefreshBox(
             isRefreshing = isRefreshing,
             onRefresh = onRefresh,
