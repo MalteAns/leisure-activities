@@ -36,6 +36,9 @@ sealed class Endpoints(
     data object ImagePresign: Endpoints(
         "${Constants.BASE_URL}/v1/images/presign",
     )
+    data class Image(val imageId: String): Endpoints(
+        "${Constants.BASE_URL}/v1/images/$imageId",
+    )
     data class ImageUpload(val imageId: String): Endpoints(
         "${Constants.BASE_URL}/v1/images/$imageId/upload",
     )

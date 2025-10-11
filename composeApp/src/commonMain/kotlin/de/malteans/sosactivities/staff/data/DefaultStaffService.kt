@@ -8,6 +8,7 @@ import de.malteans.sosactivities.model.Roster
 import de.malteans.sosactivities.model.ext.toDomain
 import de.malteans.sosactivities.model.ext.toDomainWithImageUrl
 import de.malteans.sosactivities.staff.domain.StaffService
+import io.ktor.http.*
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
@@ -90,13 +91,18 @@ class DefaultStaffService(
     }
 
     override suspend fun uploadImage(
+        filename: String,
         imageBytes: ByteArray,
-        fileName: String
-    ): Result<String> {
-        TODO("Not yet implemented")
+        mimeType: String,
+    ): Result<Image> {
+        return remoteService.uploadImage(
+            fileName = filename,
+            mimeType = ContentType.parse(mimeType),
+            imageBytes = imageBytes,
+        )
     }
 
     override suspend fun deleteImage(imageId: String): Result<Unit> {
-        TODO("Not yet implemented")
+        return remoteService.deleteImage(imageId)
     }
 }

@@ -41,7 +41,13 @@ interface StaffService {
     suspend fun getAllImages(): Result<List<Image>>
 
     /** @return Result of image url */
-    suspend fun uploadImage(imageBytes: ByteArray, fileName: String): Result<String>
+    suspend fun uploadImage(
+        filename: String,
+        imageBytes: ByteArray,
+        mimeType: String,
+    ): Result<Image>
 
-    suspend fun deleteImage(imageId: String): Result<Unit>
+    suspend fun deleteImage(
+        imageId: String
+    ): Result<Unit>
 }

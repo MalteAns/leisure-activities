@@ -1,5 +1,6 @@
 package de.malteans.sosactivities.core.data
 
+import de.malteans.sosactivities.Constants
 import de.malteans.sosactivities.Endpoints
 import de.malteans.sosactivities.core.data.network.safeCall
 import de.malteans.sosactivities.core.domain.DataStoreRepository
@@ -10,7 +11,6 @@ import de.malteans.sosactivities.model.Image
 import io.ktor.client.*
 import io.ktor.client.request.*
 import io.ktor.http.*
-import kotlinx.serialization.json.Json
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
@@ -19,10 +19,6 @@ class DefaultRemoteService(
     private val client: HttpClient,
     private val dataStoreRepository: DataStoreRepository,
 ): RemoteService {
-    private val json = Json {
-        classDiscriminator = "type"
-        ignoreUnknownKeys = true
-    }
 
     override suspend fun checkRegToken(
         token: String
@@ -184,7 +180,7 @@ class DefaultRemoteService(
                 contentType(ContentType.Application.Json)
                 setBody(ImagePresignReq(
                     filename = fileName,
-                    mimeType = mimeType.contentType,
+                    mimeType = mimeType.toString(),
                     size = imageBytes.size,
                 ))
             }
@@ -205,8 +201,8 @@ class DefaultRemoteService(
             Image(
                 id = presignResp.id,
                 filename = fileName,
-                publicUrl = finalizeResp.publicUrl,
-                mimeType = mimeType.contentType,
+                publicUrl = Constants.BASE_URL + finalizeResp.publicUrl,
+                mimeType = mimeType.toString(),
                 byteSize = imageBytes.size,
                 width = finalizeResp.width,
                 height = finalizeResp.height,
@@ -216,7 +212,9 @@ class DefaultRemoteService(
 
     override suspend fun deleteImage(
         imageId: String
-    ): Result<Unit> {
-        TODO("Not yet implemented")
+    ) = safeCall<Unit> {
+        client.delete(Endpoints.Image(imageId).url) {
+            header("Authorization", "Bearer ${dataStoreRepository.getToken()}")
+        }
     }
 }

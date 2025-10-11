@@ -16,11 +16,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import coil3.compose.AsyncImage
+import de.malteans.sosactivities.core.presentation.components.ImageWithLoading
 import de.malteans.sosactivities.core.presentation.util.UiText
 import de.malteans.sosactivities.core.presentation.util.toDateTimeString
 import de.malteans.sosactivities.core.presentation.util.toTimeString
@@ -60,17 +58,11 @@ fun ActivityItem(
         modifier = modifier.fillMaxWidth()
     ) {
         // top image if available
-        if (activity.imageUrl != null) { // TODO: Implement loading animation
-            AsyncImage(
-                model = activity.imageUrl,
-                contentDescription = activity.title,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .clip(MaterialTheme.shapes.medium)
-                    .fillMaxWidth()
-                    .height(180.dp)
-            )
-        }
+        ImageWithLoading(
+            imageUrl = activity.imageUrl,
+            contentDescription = activity.title,
+            height = 180.dp,
+        )
 
         Column(
             modifier = Modifier

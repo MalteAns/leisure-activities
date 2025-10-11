@@ -6,8 +6,9 @@ import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement.Absolute.spacedBy
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Refresh
@@ -171,8 +172,10 @@ fun SignUpOverviewScreen(
                     .fillMaxWidth()
                     .weight(1f)
             ) {
-                LazyColumn(
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(minSize = 320.dp),
                     verticalArrangement = spacedBy(8.dp),
+                    horizontalArrangement = spacedBy(8.dp),
                     modifier = Modifier.fillMaxSize()
                 ) {
                     items(state.currentActivities) { activity ->

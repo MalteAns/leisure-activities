@@ -13,29 +13,25 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.EditCalendar
-import androidx.compose.material.icons.filled.ExpandLess
-import androidx.compose.material.icons.filled.ExpandMore
-import androidx.compose.material.icons.filled.Save
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil3.compose.AsyncImage
 import de.malteans.sosactivities.core.presentation.components.CustomTopBar
+import de.malteans.sosactivities.core.presentation.components.ImageWithLoading
 import de.malteans.sosactivities.core.presentation.components.LoadingOverlayBox
 import de.malteans.sosactivities.core.presentation.util.toDateTimeString
 import de.malteans.sosactivities.core.presentation.util.toTimeString
 import de.malteans.sosactivities.staff.presentation.modifyActivity.components.DateTimePickerDialog
+import de.malteans.sosactivities.staff.presentation.modifyActivity.components.ImagePickerDialog
 import de.malteans.sosactivities.staff.presentation.modifyActivity.components.ModifyActivityTextField
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
@@ -90,7 +86,7 @@ fun ModifyActivityScreen(
         )
     }
 
-    var validToSave by remember(state.newTitle, state.newStartsAt) {
+    var validToSave by remember(state.newTitle, state.newStartsAt, unsavedChanges) {
         mutableStateOf(
             (
                 (state.newTitle.isNotNullOrBlank() && state.newStartsAt != null) ||
@@ -100,19 +96,22 @@ fun ModifyActivityScreen(
         )
     }
 
-    var showDatePicker by remember { mutableStateOf(false) }
+    var showImagePicker by remember { mutableStateOf(false) }
+    // See below scaffold for implementation
+
+    var showDateTimePicker by remember { mutableStateOf(false) }
     var datePickerInitialValue by remember { mutableStateOf<Instant?>(null) }
     var onDatePickerResult by remember { mutableStateOf<((Instant) -> Unit)?>(null) }
-    if (showDatePicker) {
+    if (showDateTimePicker) {
         DateTimePickerDialog(
             onDismissRequest = {
-                showDatePicker = false
+                showDateTimePicker = false
                 datePickerInitialValue = null
                 onDatePickerResult = null
             },
             onSubmit = { localDateTime ->
                 onDatePickerResult?.invoke(localDateTime.toInstant(TimeZone.currentSystemDefault()))
-                showDatePicker = false
+                showDateTimePicker = false
                 datePickerInitialValue = null
                 onDatePickerResult = null
             },
@@ -245,11 +244,19 @@ fun ModifyActivityScreen(
                     loadedValue = state.loadedActivityImage?.filename,
                     onValueChange = null,
                     labelRes = Res.string.image,
+                    trailingContent = {
+                        IconButton({ showImagePicker = true }) {
+                            Icon(
+                                imageVector = Icons.Default.PhotoLibrary,
+                                contentDescription = stringResource(Res.string.select_image)
+                            )
+                        }
+                    },
                     modifier = Modifier.weight(1f),
                 )
                 IconButton(
                     onClick = { onAction(ModifyActivityAction.SetShowImage(!state.showImage)) },
-                    enabled = state.newImage != null || state.loadedActivityImage != null,
+                    enabled = (state.newImage ?: state.loadedActivityImage) != null,
                     modifier = Modifier.padding(top = 8.dp) // Center with OutlinedTextField
                 ) {
                     Icon(
@@ -258,7 +265,7 @@ fun ModifyActivityScreen(
                             if (state.showImage) Res.string.hide_image else Res.string.show_image
                         ),
                         tint = MaterialTheme.colorScheme.onSurface.copy(
-                            alpha = if (state.newImage != null || state.loadedActivityImage != null) 1f else 0.4f,
+                            alpha = if ((state.newImage ?: state.loadedActivityImage) != null) 1f else 0.4f,
                         ),
                     )
                 }
@@ -267,16 +274,15 @@ fun ModifyActivityScreen(
                 visible = state.showImage,
                 enter = expandVertically(),
                 exit = shrinkVertically(),
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
-                AsyncImage( // TODO: Implement loading animation + "broken" image
-                    model = state.newImage?.publicUrl ?: state.loadedActivityImage?.publicUrl,
+                ImageWithLoading(
+                    imageUrl = state.newImage?.publicUrl ?: state.loadedActivityImage?.publicUrl,
                     contentDescription = stringResource(Res.string.image),
-                    contentScale = ContentScale.Crop,
+                    height = 180.dp,
                     modifier = Modifier
-                        .clip(MaterialTheme.shapes.medium)
                         .padding(vertical = 8.dp)
-                        .fillMaxWidth()
-                        .height(180.dp)
+                        .widthIn(max = 350.dp)
                 )
             }
             ModifyActivityTextField(
@@ -298,7 +304,7 @@ fun ModifyActivityScreen(
                         onDatePickerResult = { instant ->
                             onAction(ModifyActivityAction.OnStartsAtChange(instant))
                         }
-                        showDatePicker = true
+                        showDateTimePicker = true
                     }
             )
             ModifyActivityTextField(
@@ -324,7 +330,7 @@ fun ModifyActivityScreen(
                         onDatePickerResult = { instant ->
                             onAction(ModifyActivityAction.OnEndsAtChange(instant))
                         }
-                        showDatePicker = true
+                        showDateTimePicker = true
                     }
             )
             ModifyActivityTextField(
@@ -358,6 +364,17 @@ fun ModifyActivityScreen(
             Spacer(Modifier.height(128.dp))
         }
         if (state.savingInProcess) LoadingOverlayBox(Modifier.padding(paddingValues))
+    }
+
+
+    if (showImagePicker) {
+        ImagePickerDialog(
+            allImages = state.allImages,
+            onUploadImage = { data -> onAction(ModifyActivityAction.OnUploadImage(data)) },
+            uploadInProgress = state.imageUploadInProgress,
+            onDismissRequest = { showImagePicker = false },
+            onImagePicked = { image -> onAction(ModifyActivityAction.OnImageChange(image)) }
+        )
     }
 }
 

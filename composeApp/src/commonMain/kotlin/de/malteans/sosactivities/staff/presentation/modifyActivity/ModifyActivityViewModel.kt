@@ -80,12 +80,7 @@ class ModifyActivityViewModel(
     fun onAction(action: ModifyActivityAction) {
         when(action) {
             is ModifyActivityAction.OnTitleChange -> _state.update { it.copy(newTitle = action.newValue) }
-            is ModifyActivityAction.OnImageIdChange -> _state.update { state ->
-                state.copy(newImage = action.newImageId.let { newImageId ->
-                    if (newImageId == state.loadedActivity?.imageId) null
-                    else _allImages.value.find { it.id == newImageId }
-                })
-            }
+            is ModifyActivityAction.OnImageChange -> _state.update { it.copy(newImage = action.newImage) }
             is ModifyActivityAction.OnStartsAtChange -> _state.update { state ->
                 state.copy(newStartsAt = action.newValue.takeIf { it != state.loadedActivity?.startsAt })
             }
@@ -105,6 +100,29 @@ class ModifyActivityViewModel(
                 state.copy(newContactPersonInformation = action.newValue.takeIf { it != state.loadedActivity?.contactPersonInformation })
             }
             is ModifyActivityAction.SetShowImage -> _state.update { it.copy(showImage = action.newValue) }
+            is ModifyActivityAction.OnUploadImage -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    _state.update { it.copy(imageUploadInProgress = true) }
+                    staffService.uploadImage(
+                        filename = action.imageUploadData.filename,
+                        imageBytes = action.imageUploadData.bytes,
+                        mimeType = action.imageUploadData.mimeType
+                    )
+                        .onSuccess { image ->
+                            _allImages.update { it + image }
+                            _state.update { it.copy(
+                                imageUploadInProgress = false,
+                                imageUploadError = null,
+                            ) }
+                        }
+                        .onFailure { error ->
+                            _state.update { it.copy(
+                                imageUploadInProgress = false,
+                                imageUploadError = error,
+                            ) }
+                        }
+                }
+            }
             ModifyActivityAction.SaveChanges -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     _state.update { it.copy(savingInProcess = true) }

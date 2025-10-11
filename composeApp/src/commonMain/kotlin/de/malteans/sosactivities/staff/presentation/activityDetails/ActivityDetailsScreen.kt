@@ -25,12 +25,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil3.compose.AsyncImage
 import de.malteans.sosactivities.core.presentation.components.CustomTopBar
+import de.malteans.sosactivities.core.presentation.components.ImageWithLoading
 import de.malteans.sosactivities.core.presentation.util.toDateTimeString
 import de.malteans.sosactivities.core.presentation.util.toTimeString
 import de.malteans.sosactivities.signUp.presentation.components.DetailsInfoItem
@@ -197,15 +196,13 @@ fun ActivityDetailsScreen(
                                 .verticalScroll(rememberScrollState())
                                 .fillMaxWidth()
                         ) {
-                            AsyncImage( // TODO: Implement loading animation + "broken" image
-                                model = state.currentActivity.imageUrl,
+                            ImageWithLoading(
+                                imageUrl = state.currentActivity.imageUrl,
                                 contentDescription = state.currentActivity.title,
-                                contentScale = ContentScale.Crop,
+                                height = 180.dp,
                                 modifier = Modifier
-                                    .clip(MaterialTheme.shapes.medium)
-                                    .padding(vertical = 8.dp)
-                                    .fillMaxWidth()
-                                    .height(180.dp)
+                                    .widthIn(max = 350.dp)
+                                    .align(Alignment.CenterHorizontally)
                             )
                             Text("${stringResource(Res.string.starts)}: ${state.currentActivity.startsAt.toDateTimeString()}")
                             Text("${stringResource(Res.string.ends)}: ${state.currentActivity.endsAt?.toDateTimeString() ?: stringResource(Res.string.not_provided)}")

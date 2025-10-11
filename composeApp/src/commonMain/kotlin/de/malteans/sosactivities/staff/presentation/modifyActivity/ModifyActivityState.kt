@@ -30,4 +30,7 @@ data class ModifyActivityState(
     val removeImage: Boolean = false, // TODO: Implement removing the image
 
     val showImage: Boolean = false,
+
+    val imageUploadInProgress: Boolean = false,
+    val imageUploadError: Throwable? = null,
 )

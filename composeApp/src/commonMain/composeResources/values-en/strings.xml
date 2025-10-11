@@ -77,6 +77,15 @@
     <string name="discard_changes">Discard changes</string>
     <string name="activity_created">Activity created</string>
     <string name="changes_saved">Saved changes</string>
+    <string name="select_image">Select image</string>
+    <string name="upload_image">Bild hochladen</string>
+
+    <!-- Upload Image Dialog ___________________________________________________________________ -->
+    <string name="upload_image_dialog_title">Upload Image?</string>
+    <string name="upload_image_dialog_desc1">Please select a filename for the image:</string>
+    <string name="filename">Filename</string>
+    <string name="upload_image_dialog_desc2">The image will be uploaded to the server and can then be seen and selected by every staff member.</string>
+    <string name="upload">Upload</string>
 
     <!-- DateTime Picker Dialog ________________________________________________________________ -->
     <string name="date">Date</string>
