@@ -7,7 +7,6 @@
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
 
     <application
-            android:usesCleartextTraffic="true"
             tools:replace="android:name"
             android:localeConfig="@xml/locales_config"
 

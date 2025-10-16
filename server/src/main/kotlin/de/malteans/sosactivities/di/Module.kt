@@ -10,9 +10,9 @@ import org.koin.dsl.module
 val module = module {
     single<TokenService> { JwtTokenService() }
 
-    // Database and related services
-    single<DatabaseService> { DatabaseServiceImpl(get()) }
-    single { get<DatabaseService>().createDatabase() }
+    // Database and related services MÜÜLLL??
+//    single<DatabaseService> { DatabaseServiceImpl(get()) }
+//    single { get<DatabaseService>().createDatabase() }
 
     single<Database> {
         Database.connect(

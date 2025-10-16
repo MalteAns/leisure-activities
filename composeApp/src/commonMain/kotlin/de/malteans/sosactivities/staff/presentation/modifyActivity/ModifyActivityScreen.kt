@@ -73,7 +73,7 @@ fun ModifyActivityScreen(
 ) {
     val focusManger = LocalFocusManager.current
 
-    var unsavedChanges by remember(state.newTitle, state.newStartsAt, state.newEndsAt, state.newImage, state.newMeetUpInformation, state.newActivityLocation, state.newHostInformation, state.newContactPersonInformation) {
+    val unsavedChanges by remember(state.newTitle, state.newStartsAt, state.newEndsAt, state.newImage, state.newMeetUpInformation, state.newActivityLocation, state.newHostInformation, state.newContactPersonInformation) {
         mutableStateOf(
             state.newTitle.isNotNullOrBlank() ||
             state.newStartsAt != null ||
@@ -86,7 +86,7 @@ fun ModifyActivityScreen(
         )
     }
 
-    var validToSave by remember(state.newTitle, state.newStartsAt, unsavedChanges) {
+    val validToSave by remember(state.newTitle, state.newStartsAt, state.newEndsAt, state.loadedActivity, unsavedChanges) {
         mutableStateOf(
             (
                 (state.newTitle.isNotNullOrBlank() && state.newStartsAt != null) ||

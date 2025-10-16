@@ -79,8 +79,12 @@ class ModifyActivityViewModel(
 
     fun onAction(action: ModifyActivityAction) {
         when(action) {
-            is ModifyActivityAction.OnTitleChange -> _state.update { it.copy(newTitle = action.newValue) }
-            is ModifyActivityAction.OnImageChange -> _state.update { it.copy(newImage = action.newImage) }
+            is ModifyActivityAction.OnTitleChange -> _state.update { state ->
+                state.copy(newTitle = action.newValue.takeIf { it != state.loadedActivity?.title })
+            }
+            is ModifyActivityAction.OnImageChange -> _state.update { state ->
+                state.copy(newImage = action.newImage.takeIf { it?.id != state.loadedActivity?.imageId })
+            }
             is ModifyActivityAction.OnStartsAtChange -> _state.update { state ->
                 state.copy(newStartsAt = action.newValue.takeIf { it != state.loadedActivity?.startsAt })
             }

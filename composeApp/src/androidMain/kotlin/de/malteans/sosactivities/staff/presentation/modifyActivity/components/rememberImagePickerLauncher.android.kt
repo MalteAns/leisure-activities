@@ -4,7 +4,6 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.launch
@@ -33,15 +32,13 @@ actual fun rememberImagePickerLauncher(
         }
     }
 
-    return remember {
-        ImagePickerLauncher(
-            onLaunch = {
-                photoPickerLauncher.launch(
-                    PickVisualMediaRequest(
-                        mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly
-                    )
+    return ImagePickerLauncher(
+        onLaunch = {
+            photoPickerLauncher.launch(
+                PickVisualMediaRequest(
+                    mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly
                 )
-            }
-        )
-    }
+            )
+        }
+    )
 }

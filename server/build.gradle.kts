@@ -32,11 +32,13 @@ dependencies {
     implementation(libs.ktor.server.status.pages)
     implementation(libs.ktor.server.auto.head.response)
     implementation(libs.ktor.server.request.validation)
+
+    // Koin (DI)
     implementation(libs.koin.ktor)
     implementation(libs.koin.logger.slf4j)
 
     // Http Client (for status page images)
-    implementation("io.ktor:ktor-client-cio:2.3.7")
+    implementation(libs.ktor.client.cio)
 
     // Database
     implementation(libs.exposed.core)
