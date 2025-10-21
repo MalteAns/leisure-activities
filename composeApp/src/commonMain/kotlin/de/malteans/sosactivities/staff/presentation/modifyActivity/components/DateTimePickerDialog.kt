@@ -13,8 +13,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import de.malteans.sosactivities.core.presentation.util.toDateString
 import kotlinx.datetime.*
+import leisureactivities.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
-import sosactivities.composeapp.generated.resources.*
 import kotlin.time.Clock
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant

@@ -15,11 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import de.malteans.sosactivities.navigation.CurScreen
 import de.malteans.sosactivities.navigation.Route
+import leisureactivities.composeapp.generated.resources.Res
+import leisureactivities.composeapp.generated.resources.settings
+import leisureactivities.composeapp.generated.resources.sign_up_overview
+import leisureactivities.composeapp.generated.resources.staff_area
 import org.jetbrains.compose.resources.stringResource
-import sosactivities.composeapp.generated.resources.Res
-import sosactivities.composeapp.generated.resources.settings
-import sosactivities.composeapp.generated.resources.sign_up_overview
-import sosactivities.composeapp.generated.resources.staff_area
 
 @Composable
 fun NavDrawerSheet(

@@ -1,4 +1,4 @@
-rootProject.name = "sosactivities"
+rootProject.name = "LeisureActivities"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
 pluginManagement {
@@ -32,3 +32,4 @@ include(":composeApp")
 include(":server")
 include(":shared")
 include(":dataStore")
+include(":legal")

@@ -26,9 +26,9 @@ import de.malteans.sosactivities.core.presentation.util.UiText
 import de.malteans.sosactivities.core.presentation.util.currentPlatform
 import de.malteans.sosactivities.model.ext.displayName
 import de.malteans.sosactivities.registration.presentation.components.QrScannerScreen
+import leisureactivities.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import sosactivities.composeapp.generated.resources.*
 
 @Composable
 fun RegistrationScreenRoot(

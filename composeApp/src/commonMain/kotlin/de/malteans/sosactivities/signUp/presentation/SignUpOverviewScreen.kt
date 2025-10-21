@@ -31,9 +31,9 @@ import de.malteans.sosactivities.signUp.presentation.components.SignOutDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
+import leisureactivities.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import sosactivities.composeapp.generated.resources.*
 
 @Composable
 fun SignUpOverviewScreenRoot(

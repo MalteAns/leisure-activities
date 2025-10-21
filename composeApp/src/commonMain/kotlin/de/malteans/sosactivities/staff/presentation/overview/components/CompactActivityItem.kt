@@ -22,9 +22,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import de.malteans.sosactivities.core.presentation.util.toDateTimeString
 import de.malteans.sosactivities.core.presentation.util.toTimeString
 import de.malteans.sosactivities.model.ActivityWithImageUrl
+import leisureactivities.composeapp.generated.resources.Res
+import leisureactivities.composeapp.generated.resources.edit
 import org.jetbrains.compose.resources.stringResource
-import sosactivities.composeapp.generated.resources.Res
-import sosactivities.composeapp.generated.resources.edit
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)

@@ -27,6 +27,12 @@ jobs:
       - name: Make gradlew executable
         run: chmod +x ./gradlew
 
+      - name: Verify aboutlibraries.json is up to date
+        run: |
+          ./gradlew :composeApp:exportLibraryDefinitions
+          git diff --exit-code -- composeApp/src/commonMain/resources/aboutlibraries.json || \
+            (echo "❌ aboutlibraries.json outdated. Run './gradlew :composeApp:exportLibraryDefinitions' locally and commit." && exit 1)
+
       - name: Build with Gradle
         run: ./gradlew clean :shared:build :dataStore:build :composeApp:build check
 

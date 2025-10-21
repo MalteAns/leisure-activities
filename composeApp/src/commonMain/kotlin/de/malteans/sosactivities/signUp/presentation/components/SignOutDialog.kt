@@ -5,8 +5,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import de.malteans.sosactivities.model.ActivityWithImageUrl
+import leisureactivities.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
-import sosactivities.composeapp.generated.resources.*
 
 @Composable
 fun SignOutDialog(

@@ -3,7 +3,9 @@ package de.malteans.sosactivities.core.presentation.settings.components
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -25,7 +27,7 @@ fun SettingsToggleItem(
     modifier: Modifier = Modifier
         .clip(MaterialTheme.shapes.medium)
 ) {
-    Row(
+    Row (
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .then(
@@ -39,25 +41,23 @@ fun SettingsToggleItem(
                     .clickable(enabled) { onStateChange(!state) }
             )
             .background(MaterialTheme.colorScheme.containerColor)
-            .padding(8.dp)
+            .padding(16.dp)
     ) {
         Column(
-            modifier = Modifier
-                .weight(1f)
+            modifier = Modifier.weight(1f)
         ) {
             Text(
                 text = title,
                 style = MaterialTheme.typography.titleMedium,
             )
-            description?.let {
+            if (description != null) {
                 Text(
-                    text = it,
-                    style = MaterialTheme.typography.bodySmall,
+                    text = description,
+                    style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }
-        Spacer(Modifier.width(8.dp))
         Switch(
             checked = state,
             onCheckedChange = onStateChange,

@@ -5,12 +5,19 @@ import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModel
 import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.mikepenz.aboutlibraries.ui.compose.produceLibraries
+import de.malteans.legal.presentation.navigation.LegalRoute
+import de.malteans.legal.presentation.screens.EulaScreen
+import de.malteans.legal.presentation.screens.ImprintScreen
+import de.malteans.legal.presentation.screens.LicensesScreen
+import de.malteans.legal.presentation.screens.PrivacyScreen
 import de.malteans.sosactivities.core.domain.DataStoreRepository
 import de.malteans.sosactivities.core.presentation.settings.SettingsScreenRoot
 import de.malteans.sosactivities.registration.presentation.RegistrationScreenRoot
@@ -18,6 +25,7 @@ import de.malteans.sosactivities.signUp.presentation.SignUpOverviewScreenRoot
 import de.malteans.sosactivities.staff.presentation.activityDetails.ActivityDetailsScreenRoot
 import de.malteans.sosactivities.staff.presentation.modifyActivity.ModifyActivityScreenRoot
 import de.malteans.sosactivities.staff.presentation.overview.StaffOverviewScreenRoot
+import leisureactivities.composeapp.generated.resources.Res
 import org.koin.compose.koinInject
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -53,7 +61,10 @@ fun NavGraph(
             composable<Route.Main.Settings> {
                 setCurScreen(CurScreen.SETTINGS)
                 SettingsScreenRoot(
-                    showDrawer = showDrawer
+                    showDrawer = showDrawer,
+                    navigateToLegalScreen = { legalRoute ->
+                        navController.navigate(legalRoute)
+                    }
                 )
             }
         }
@@ -102,6 +113,34 @@ fun NavGraph(
                 ModifyActivityScreenRoot(
                     activityId = activityId,
                     navigateBack = { navController.popBackStack() }
+                )
+            }
+        }
+        navigation<Route.LegalNav>(
+            startDestination = LegalRoute.Imprint
+        ) {
+            composable<LegalRoute.Imprint> {
+                ImprintScreen(
+                    navigateBack = { navController.popBackStack() },
+                )
+            }
+            composable<LegalRoute.Eula> {
+                EulaScreen(
+                    navigateBack = { navController.popBackStack() },
+                )
+            }
+            composable<LegalRoute.Privacy> {
+                PrivacyScreen(
+                    navigateBack = { navController.popBackStack() },
+                )
+            }
+            composable<LegalRoute.Licenses> {
+                val libraries by produceLibraries {
+                    Res.readBytes("files/aboutlibraries.json").decodeToString()
+                }
+                LicensesScreen(
+                    libraries = libraries,
+                    navigateBack = { navController.popBackStack() },
                 )
             }
         }

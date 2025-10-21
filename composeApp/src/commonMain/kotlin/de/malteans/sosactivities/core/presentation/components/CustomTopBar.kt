@@ -14,9 +14,9 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import de.malteans.sosactivities.core.presentation.util.currentPlatform
+import leisureactivities.composeapp.generated.resources.Res
+import leisureactivities.composeapp.generated.resources.menu
 import org.jetbrains.compose.resources.stringResource
-import sosactivities.composeapp.generated.resources.Res
-import sosactivities.composeapp.generated.resources.menu
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

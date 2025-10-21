@@ -36,9 +36,9 @@ import de.malteans.sosactivities.staff.presentation.modifyActivity.components.Mo
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
+import leisureactivities.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import sosactivities.composeapp.generated.resources.*
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 

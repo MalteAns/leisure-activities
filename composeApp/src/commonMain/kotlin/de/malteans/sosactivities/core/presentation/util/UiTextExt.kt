@@ -3,8 +3,8 @@ package de.malteans.sosactivities.core.presentation.util
 import de.malteans.sosactivities.core.data.network.HttpStatusException
 import de.malteans.sosactivities.model.ActivityWithImageUrl
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
+import leisureactivities.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.StringResource
-import sosactivities.composeapp.generated.resources.*
 import kotlin.time.ExperimentalTime
 
 fun Throwable.toUiText() = when (this) {

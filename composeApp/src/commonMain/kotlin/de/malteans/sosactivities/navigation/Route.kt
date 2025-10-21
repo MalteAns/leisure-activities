@@ -31,4 +31,6 @@ sealed interface Route {
         @Serializable
         data class ModifyActivity(val activityId: String?) : Staff
     }
+    @Serializable
+    data object LegalNav : Route
 }

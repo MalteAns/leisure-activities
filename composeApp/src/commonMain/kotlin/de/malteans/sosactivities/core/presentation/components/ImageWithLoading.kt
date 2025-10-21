@@ -19,10 +19,10 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImagePainter
 import coil3.compose.rememberAsyncImagePainter
+import leisureactivities.composeapp.generated.resources.Res
+import leisureactivities.composeapp.generated.resources.ic_file_error
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
-import sosactivities.composeapp.generated.resources.Res
-import sosactivities.composeapp.generated.resources.ic_file_error
 
 @Composable
 fun ImageWithLoading(

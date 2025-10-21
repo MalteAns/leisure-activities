@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import de.malteans.sosactivities.model.Image
+import leisureactivities.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
-import sosactivities.composeapp.generated.resources.*
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -132,7 +132,7 @@ private fun ImagePicketContent(
                         value = filename,
                         onValueChange = { filename = it },
                         placeholder = { Text(stringResource(Res.string.filename)) },
-                        suffix = data.mimeType?.substringAfterLast('/')?.let { { Text(".$it") } },
+                        suffix = data.mimeType.substringAfterLast('/').let { { Text(".$it") } },
                         isError = !filename.isValidFilename(),
                         modifier = Modifier.fillMaxWidth()
                     )

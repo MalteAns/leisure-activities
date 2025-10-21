@@ -13,11 +13,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import leisureactivities.composeapp.generated.resources.Res
+import leisureactivities.composeapp.generated.resources.app_name
+import leisureactivities.composeapp.generated.resources.ic_launcher_round
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import sosactivities.composeapp.generated.resources.Res
-import sosactivities.composeapp.generated.resources.app_name
-import sosactivities.composeapp.generated.resources.ic_launcher_round
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable

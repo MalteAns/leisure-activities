@@ -8,6 +8,19 @@ plugins {
     alias(libs.plugins.compose.compiler)
 
     alias(libs.plugins.jetbrains.kotlin.serialization)
+
+    alias(libs.plugins.aboutLibraries)
+}
+
+aboutLibraries {
+    export {
+        outputFile = file("src/commonMain/composeResources/files/aboutlibraries.json")
+        prettyPrint = true
+    }
+    library {
+        // Enable the duplication mode, allows to merge, or link dependencies which relate
+        duplicationMode = com.mikepenz.aboutlibraries.plugin.DuplicateMode.MERGE
+    }
 }
 
 kotlin {
@@ -53,6 +66,7 @@ kotlin {
         commonMain.dependencies {
             implementation(projects.shared)
             implementation(projects.dataStore)
+            implementation(projects.legal)
 
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -87,6 +101,10 @@ kotlin {
 
             // Back Handler
             implementation(libs.ui.backhandler)
+
+            // About Libraries
+            implementation(libs.aboutlibraries.compose.core)
+            implementation(libs.aboutlibraries.compose.m3)
         }
         iosMain.dependencies {
             implementation(projects.dataStore)

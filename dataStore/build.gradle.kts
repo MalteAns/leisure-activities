@@ -70,6 +70,10 @@ kotlin {
             }
         }
 
+        desktopMain.dependencies {
+            implementation(compose.desktop.currentOs)
+        }
+
         iosMain {
             dependencies {
                 // Add iOS-specific dependencies here. This a source set created by Kotlin Gradle
@@ -78,10 +82,6 @@ kotlin {
                 // on common by default and will correctly pull the iOS artifacts of any
                 // KMP dependencies declared in commonMain.
             }
-        }
-
-        desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
         }
     }
 }

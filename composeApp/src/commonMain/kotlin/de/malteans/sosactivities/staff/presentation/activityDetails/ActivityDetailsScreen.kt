@@ -35,10 +35,10 @@ import de.malteans.sosactivities.core.presentation.util.toTimeString
 import de.malteans.sosactivities.signUp.presentation.components.DetailsInfoItem
 import de.malteans.sosactivities.staff.presentation.activityDetails.components.ParticipantListItem
 import de.malteans.sosactivities.themes.containerColor
+import leisureactivities.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import sosactivities.composeapp.generated.resources.*
 import kotlin.time.ExperimentalTime
 
 @Composable

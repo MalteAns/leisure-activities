@@ -8,9 +8,9 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import de.malteans.sosactivities.core.presentation.util.UiText
+import leisureactivities.composeapp.generated.resources.Res
+import leisureactivities.composeapp.generated.resources.close
 import org.jetbrains.compose.resources.stringResource
-import sosactivities.composeapp.generated.resources.Res
-import sosactivities.composeapp.generated.resources.close
 
 @Composable
 fun InformationTextDialog(

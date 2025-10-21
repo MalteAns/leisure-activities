@@ -10,9 +10,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import sosactivities.composeapp.generated.resources.Res
-import sosactivities.composeapp.generated.resources.activity_created
-import sosactivities.composeapp.generated.resources.changes_saved
+import leisureactivities.composeapp.generated.resources.Res
+import leisureactivities.composeapp.generated.resources.activity_created
+import leisureactivities.composeapp.generated.resources.changes_saved
 import kotlin.time.ExperimentalTime
 
 @OptIn(ExperimentalTime::class)

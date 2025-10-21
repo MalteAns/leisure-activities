@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import kotlinx.coroutines.*
+import leisureactivities.composeapp.generated.resources.Res
+import leisureactivities.composeapp.generated.resources.select_image
 import org.jetbrains.compose.resources.stringResource
-import sosactivities.composeapp.generated.resources.Res
-import sosactivities.composeapp.generated.resources.select_image
 import java.awt.FileDialog
 import java.awt.Frame
 import java.io.File

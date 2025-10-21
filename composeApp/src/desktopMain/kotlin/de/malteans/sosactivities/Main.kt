@@ -4,9 +4,9 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import de.malteans.sosactivities.app.App
 import de.malteans.sosactivities.di.initKoin
+import leisureactivities.composeapp.generated.resources.Res
+import leisureactivities.composeapp.generated.resources.ic_launcher_round
 import org.jetbrains.compose.resources.painterResource
-import sosactivities.composeapp.generated.resources.Res
-import sosactivities.composeapp.generated.resources.ic_launcher_round
 
 fun main() {
     application {

@@ -1,9 +1,8 @@
 package de.malteans.sosactivities.core.presentation.settings
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
@@ -11,19 +10,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import de.malteans.legal.presentation.components.LegalsList
+import de.malteans.legal.presentation.navigation.LegalRoute
 import de.malteans.sosactivities.core.presentation.components.CustomTopBar
 import de.malteans.sosactivities.core.presentation.settings.components.InformationTextDialog
 import de.malteans.sosactivities.core.presentation.settings.components.SettingsToggleItem
 import de.malteans.sosactivities.core.presentation.util.UiText
 import de.malteans.sosactivities.core.presentation.util.currentPlatform
+import de.malteans.sosactivities.themes.containerColor
+import leisureactivities.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
-import sosactivities.composeapp.generated.resources.*
 
 @Composable
 fun SettingsScreenRoot(
     viewModel: SettingsViewModel = koinViewModel(),
     showDrawer: (Boolean) -> Unit,
+    navigateToLegalScreen: (LegalRoute) -> Unit,
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
 
@@ -32,6 +35,7 @@ fun SettingsScreenRoot(
         onAction = { action ->
             when(action) {
                 is SettingsAction.ShowDrawer -> showDrawer(action.show)
+                is SettingsAction.NavigateToLegalScreen -> navigateToLegalScreen(action.route)
                 else -> viewModel.onAction(action)
             }
         }
@@ -65,6 +69,7 @@ fun SettingsScreen(
                 .padding(top = 8.dp)
                 .padding(horizontal = 8.dp)
                 .padding(pad)
+                .verticalScroll(rememberScrollState())
         ) {
             SettingsToggleItem(
                 title = stringResource(Res.string.tts_on_tap),
@@ -78,6 +83,15 @@ fun SettingsScreen(
                 modifier = Modifier
                     .clip(MaterialTheme.shapes.medium)
                     .fillMaxWidth()
+            )
+            Spacer(Modifier.height(16.dp))
+            LegalsList(
+                tileContainerColor = MaterialTheme.colorScheme.containerColor,
+                navigateToLegalScreen = { route ->
+                    onAction(SettingsAction.NavigateToLegalScreen(route))
+                },
+                modifier = Modifier
+                    .clip(MaterialTheme.shapes.medium)
             )
         }
     }

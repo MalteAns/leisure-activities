@@ -14,9 +14,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import leisureactivities.composeapp.generated.resources.Res
+import leisureactivities.composeapp.generated.resources.upload_image
 import org.jetbrains.compose.resources.stringResource
-import sosactivities.composeapp.generated.resources.Res
-import sosactivities.composeapp.generated.resources.upload_image
 
 @Composable
 fun DragAndDropOverlay(

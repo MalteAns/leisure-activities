@@ -26,10 +26,10 @@ import de.malteans.sosactivities.core.presentation.util.toUiTexts
 import de.malteans.sosactivities.model.ActivityWithImageUrl
 import de.malteans.sosactivities.themes.SosActivitiesTheme
 import kotlinx.datetime.format.FormatStringsInDatetimeFormats
+import leisureactivities.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
-import sosactivities.composeapp.generated.resources.*
 import kotlin.time.ExperimentalTime
 import kotlin.time.Instant
 
