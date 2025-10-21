@@ -3,8 +3,10 @@ package de.malteans.sosactivities.staff.presentation.modifyActivity.components
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccessTime
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.*
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -59,22 +61,14 @@ fun DateTimePickerDialog(
             shape = MaterialTheme.shapes.large,
             modifier = Modifier
                 .widthIn(max = 400.dp)
-//                .fillMaxWidth()
         ) {
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                TabRow(
+                PrimaryTabRow(
                     selectedTabIndex = selectedTabIndex,
-                    indicator = { tabPositions ->
-                        TabRowDefaults.SecondaryIndicator(
-                            color = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier
-                                .tabIndicatorOffset(tabPositions[selectedTabIndex])
-                        )
-                    },
                     containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -83,28 +77,36 @@ fun DateTimePickerDialog(
                         selected = selectedTabIndex == 0,
                         onClick = { selectedTabIndex = 0 },
                         unselectedContentColor = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier
-                            .weight(1f)
                     ) {
+                        Icon(
+                            imageVector = Icons.Default.DateRange,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(top = 4.dp)
+                        )
                         Text(
                             text = datePickerState.selectedDateMillis?.let {
                                 Instant.fromEpochMilliseconds(it).toDateString()
                             } ?: stringResource(Res.string.date),
                             modifier = Modifier
-                                .padding(top = 12.dp, bottom = 8.dp)
+                                .padding(bottom = 4.dp)
                         )
                     }
                     Tab(
                         selected = selectedTabIndex == 1,
                         onClick = { selectedTabIndex = 1 },
                         unselectedContentColor = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier
-                            .weight(1f)
                     ) {
+                        Icon(
+                            imageVector = Icons.Default.AccessTime,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(top = 4.dp)
+                        )
                         Text(
                             text = "${timePickerState.hour}:${timePickerState.minute.toString().padStart(2, '0')}",
                             modifier = Modifier
-                                .padding(top = 12.dp, bottom = 8.dp)
+                                .padding(bottom = 4.dp)
                         )
                     }
                 }

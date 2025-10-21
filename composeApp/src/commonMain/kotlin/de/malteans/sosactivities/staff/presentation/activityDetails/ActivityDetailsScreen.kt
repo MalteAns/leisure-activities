@@ -18,8 +18,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Group
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.*
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -130,15 +131,8 @@ fun ActivityDetailsScreen(
                 .padding(8.dp)
                 .padding(paddingValues)
         ) {
-            TabRow(
+            PrimaryTabRow(
                 selectedTabIndex = state.selectedTabIndex,
-                indicator = { tabPositions ->
-                    TabRowDefaults.SecondaryIndicator(
-                        color = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier
-                            .tabIndicatorOffset(tabPositions[state.selectedTabIndex])
-                    )
-                },
                 containerColor = MaterialTheme.colorScheme.containerColor,
                 modifier = Modifier
                     .clip(MaterialTheme.shapes.medium.copy(
@@ -151,26 +145,34 @@ fun ActivityDetailsScreen(
                     selected = state.selectedTabIndex == 0,
                     onClick = { onAction(ActivityDetailsAction.OnTabSelected(0)) },
                     unselectedContentColor = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .weight(1f)
                 ) {
+                    Icon(
+                        imageVector = Icons.Default.Info,
+                        contentDescription = stringResource(Res.string.information),
+                        modifier = Modifier
+                            .padding(top = 6.dp)
+                    )
                     Text(
                         text = stringResource(Res.string.information),
                         modifier = Modifier
-                            .padding(top = 18.dp, bottom = 12.dp)
+                            .padding(bottom = 6.dp)
                     )
                 }
                 Tab(
                     selected = state.selectedTabIndex == 1,
                     onClick = { onAction(ActivityDetailsAction.OnTabSelected(1)) },
                     unselectedContentColor = MaterialTheme.colorScheme.onSurface,
-                    modifier = Modifier
-                        .weight(1f)
                 ) {
+                    Icon(
+                        imageVector = Icons.Default.Group,
+                        contentDescription = stringResource(Res.string.participants),
+                        modifier = Modifier
+                            .padding(top = 6.dp)
+                    )
                     Text(
                         text = stringResource(Res.string.participants),
                         modifier = Modifier
-                            .padding(top = 18.dp, bottom = 12.dp)
+                            .padding(bottom = 6.dp)
                     )
                 }
             }
