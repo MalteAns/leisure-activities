@@ -34,7 +34,7 @@ jobs:
             (echo "❌ aboutlibraries.json outdated. Run './gradlew :composeApp:exportLibraryDefinitions' locally and commit." && exit 1)
 
       - name: Build with Gradle
-        run: ./gradlew clean :shared:build :dataStore:build :composeApp:build check
+        run: ./gradlew clean :shared:build :legal:build :dataStore:build :composeApp:build check
 
 #      - name: Run Unit Tests
 #        run: ./gradlew test
