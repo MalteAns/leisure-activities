@@ -5,4 +5,5 @@ enum class CurScreen {
     SIGN_UP,
     STAFF_AREA,
     SETTINGS,
+    LEGALS,
 }

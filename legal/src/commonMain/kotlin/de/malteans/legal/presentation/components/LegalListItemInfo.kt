@@ -2,7 +2,6 @@ package de.malteans.legal.presentation.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AdminPanelSettings
-import androidx.compose.material.icons.outlined.Balance
 import androidx.compose.material.icons.outlined.Description
 import androidx.compose.material.icons.outlined.Key
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -30,12 +29,12 @@ val legalListItemInfos = listOf(
         description = Res.string.privacy_desc,
         route = LegalRoute.Privacy,
     ),
-    LegalListItemInfo(
-        icon = Icons.Outlined.Balance,
-        title = Res.string.eula_title,
-        description = Res.string.eula_desc,
-        route = LegalRoute.Eula,
-    ),
+//    LegalListItemInfo(
+//        icon = Icons.Outlined.Balance,
+//        title = Res.string.eula_title,
+//        description = Res.string.eula_desc,
+//        route = LegalRoute.Eula,
+//    ),
     LegalListItemInfo(
         icon = Icons.Outlined.Key,
         title = Res.string.license_title,

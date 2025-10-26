@@ -4,9 +4,7 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.navigation.*
 import androidx.navigation.compose.NavHost
@@ -14,7 +12,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.mikepenz.aboutlibraries.ui.compose.produceLibraries
 import de.malteans.legal.presentation.navigation.LegalRoute
-import de.malteans.legal.presentation.screens.EulaScreen
 import de.malteans.legal.presentation.screens.ImprintScreen
 import de.malteans.legal.presentation.screens.LicensesScreen
 import de.malteans.legal.presentation.screens.PrivacyScreen
@@ -98,6 +95,7 @@ fun NavGraph(
                 popExitTransition = { slideOutHorizontally { it } },
                 popEnterTransition = { EnterTransition.None }
             ) { backStackEntry ->
+                setCurScreen(CurScreen.STAFF_AREA)
                 val activityId = backStackEntry.toRoute<Route.Staff.ActivityDetails>().activityId
                 ActivityDetailsScreenRoot(
                     activityId = activityId,
@@ -109,6 +107,7 @@ fun NavGraph(
                 enterTransition = { slideInHorizontally { it } },
                 popExitTransition = { slideOutHorizontally { it } },
             ) { backStackEntry ->
+                setCurScreen(CurScreen.STAFF_AREA)
                 val activityId = backStackEntry.toRoute<Route.Staff.ModifyActivity>().activityId
                 ModifyActivityScreenRoot(
                     activityId = activityId,
@@ -120,21 +119,24 @@ fun NavGraph(
             startDestination = LegalRoute.Imprint
         ) {
             composable<LegalRoute.Imprint> {
+                setCurScreen(CurScreen.LEGALS)
                 ImprintScreen(
                     navigateBack = { navController.popBackStack() },
                 )
             }
-            composable<LegalRoute.Eula> {
-                EulaScreen(
-                    navigateBack = { navController.popBackStack() },
-                )
-            }
             composable<LegalRoute.Privacy> {
+                setCurScreen(CurScreen.LEGALS)
+                var htmlData by remember { mutableStateOf<String?>(null) }
+                LaunchedEffect(Unit) {
+                    htmlData = Res.readBytes("files/privacy_policy_de.html").decodeToString()
+                }
                 PrivacyScreen(
+                    htmlData = htmlData,
                     navigateBack = { navController.popBackStack() },
                 )
             }
             composable<LegalRoute.Licenses> {
+                setCurScreen(CurScreen.LEGALS)
                 val libraries by produceLibraries {
                     Res.readBytes("files/aboutlibraries.json").decodeToString()
                 }

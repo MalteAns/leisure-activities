@@ -70,7 +70,7 @@ fun MainScreen() {
     ) {
         CustomNavigationDrawer(
             drawerState = drawerState,
-            visible = curScreen != CurScreen.REGISTER,
+            visible = curScreen !in listOf(CurScreen.REGISTER, CurScreen.LEGALS),
             drawerContent = {
                 NavDrawerSheet(
                     navController = navController,

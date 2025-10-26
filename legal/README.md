@@ -13,13 +13,13 @@ navigation<Route.LegalNav>(
             navigateBack = { navController.popBackStack() },
         )
     }
-    composable<LegalRoute.Eula> {
-        EulaScreen(
-            navigateBack = { navController.popBackStack() },
-        )
-    }
     composable<LegalRoute.Privacy> {
+        var htmlData by remember { mutableStateOf<String?>(null) }
+        LaunchedEffect(Unit) {
+            htmlData = Res.readBytes("files/privacy_policy_de.html").decodeToString()
+        }
         PrivacyScreen(
+            htmlData = htmlData,
             navigateBack = { navController.popBackStack() },
         )
     }
@@ -53,6 +53,7 @@ androidx-activity-compose = { module = "androidx.activity:activity-compose", ver
 ui-backhandler = { module = "org.jetbrains.compose.ui:ui-backhandler", version.ref= "compose-multiplatform" }
 
 kotlin-stdlib = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlinStdlib" }
+aboutlibraries-compose-core = { module = "com.mikepenz:aboutlibraries-compose-core", version.ref = "aboutLibraries" }
 aboutlibraries-compose-m3 = { module = "com.mikepenz:aboutlibraries-compose-m3", version.ref = "aboutLibraries" }
 
 [plugins]

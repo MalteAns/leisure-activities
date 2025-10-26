@@ -49,6 +49,9 @@ kotlin {
                 // About Libraries
                 implementation(libs.aboutlibraries.compose.core)
                 implementation(libs.aboutlibraries.compose.m3)
+
+                // WebView
+                api("io.github.kevinnzou:compose-webview-multiplatform:2.0.3")
             }
         }
 

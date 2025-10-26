@@ -1,9 +1,13 @@
 package de.malteans.legal.presentation.screens
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import de.malteans.legal.presentation.components.WebViewContent
 import leisureactivities.legal.generated.resources.Res
 import leisureactivities.legal.generated.resources.navigate_back
 import leisureactivities.legal.generated.resources.privacy_title
@@ -12,6 +16,7 @@ import org.jetbrains.compose.resources.stringResource
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PrivacyScreen(
+    htmlData: String?,
     navigateBack: () -> Unit,
 ) {
     Scaffold(
@@ -29,6 +34,11 @@ fun PrivacyScreen(
             )
         }
     ) { paddingValues ->
-
+        WebViewContent(
+            htmlData = htmlData,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+        )
     }
 }
