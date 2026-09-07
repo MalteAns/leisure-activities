@@ -40,7 +40,7 @@ kotlin {
 }
 
 android {
-    namespace = "de.malteans.sosactivities.shared"
+    namespace = "de.malteans.leisureactivities.shared"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17

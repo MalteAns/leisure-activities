@@ -127,7 +127,7 @@ kotlin {
 }
 
 android {
-    namespace = "de.malteans.sosactivities"
+    namespace = "de.malteans.leisureactivities"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
     defaultConfig {
@@ -160,15 +160,15 @@ dependencies {
 
 compose.desktop {
     application {
-        mainClass = "de.malteans.sosactivities.MainKt"
+        mainClass = "de.malteans.leisureactivities.MainKt"
 
         nativeDistributions {
             packageName = libs.versions.desktop.packageName.get()
             packageVersion = libs.versions.projectVersionName.get()
 
-            windows {
-                iconFile.set(project.file("src/desktopMain/resources/ic_launcher.ico"))
-            }
+//            windows {
+//                iconFile.set(project.file("src/desktopMain/resources/ic_launcher.ico"))
+//            }
 
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
         }
